@@ -6,9 +6,10 @@ let id = 0;
       return {
         newTodo:'',
         todos:[
-          {id:id++,text:'Learn Vue'},
-          {id:id++,text:'Learn anime.js'},
-        ]
+          {id:id++,text:'Learn Vue',done:true},
+          {id:id++,text:'Learn anime.js',done:false},
+        ],
+        hideCompleted:true
       }
     },
     methods: {
@@ -18,6 +19,11 @@ let id = 0;
       },
       removeTodo(todo){
         this.todos = this.todos.filter((t)=>t !==todo)
+      }
+    },
+    computed:{
+      filteredTodos(){
+        return this.hideCompleted?this.todos.filter((t)=>t.done == false):this.todos;
       }
     }
   }
@@ -29,13 +35,19 @@ let id = 0;
     <button>Add task</button>
   </form>
   <ul>
-    <li v-for="todo in todos" :key="todo.id">
-      {{todo.text}}
+    <li v-for="todo in filteredTodos" :key="todo.id">
+      <input type="checkbox" v-model="todo.done">
+      <span :class="{done:todo.done}">{{todo.text}}</span>
       <button @click="removeTodo(todo)">X</button>
     </li>
   </ul>
+  <button @click="hideCompleted = !hideCompleted">
+    {{hideCompleted?'Show all':'Hide completed'}}
+  </button>
 </template>
 
 <style>
-   
+   .done{
+    text-decoration: line-through;
+   }
 </style>
