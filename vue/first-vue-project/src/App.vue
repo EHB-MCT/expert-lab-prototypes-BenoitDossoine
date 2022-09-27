@@ -1,21 +1,28 @@
 <script>
-  import ChildComponent from './components/ChildComponent.vue'
+  import HomePage from './components/HomePage.vue'
   export default {
     components:{
-      ChildComponent
-    },
-    data(){
-      return {
-        greeting:"hello there!",
-        childMsg: "no child message yet!",
-        msg: 'from the parent'
-      }
+      HomePage
     }
   }
   </script>
   
   <template>
-    <input type="text" v-model="greeting">
-    <ChildComponent :message="greeting" @response="(msg)=>childMsg=msg">{{msg}}</ChildComponent>
-    <p>{{childMsg}}</p>
+    <main>
+      <HomePage/>
+    </main>
   </template>
+
+  <style>
+    body{
+      margin: 0;
+      background-color: #121212;
+      color: white;
+      font-family: 'Noto Sans Mono', monospace;
+    }
+
+    .text{
+      font-size: 2em;
+    }
+
+  </style>
