@@ -1,5 +1,6 @@
 <script>
   import HomePage from './components/HomePage.vue'
+  import ShapePage from './components/ShapePage.vue'
   export default {
     data(){
       return{
@@ -7,11 +8,13 @@
         inMoveDelay:400,
         activeSection:0,
         offsets:[],
-        touchStartY:0
+        shapeColor: '#ff3914',
       }
     },
+
     components:{
-      HomePage
+      HomePage,
+      ShapePage
     },
     methods:{
       calculateSectionOffset(){
@@ -46,17 +49,14 @@
         this.scrollToSection(this.activeSection, true);
       }
     },
-    
+
     mounted(){
       this.calculateSectionOffset();
       window.addEventListener('mousewheel',(e)=>{
         let delta = e.wheelDelta;
-        console.log(delta);
         if(delta>100 && !this.inMove){
           this.moveUp();
-          console.log("up")
         } else if(delta<-100 && !this.inMove){
-          console.log("down")
           this.moveDown();
         }
         e.preventDefault();
@@ -73,10 +73,10 @@
   <template>
     <main>
       <section class="fullpage">
-        <HomePage/>
+        <HomePage :shapeColor="shapeColor"/>
       </section>
       <section class="fullpage">
-        <FriendPage/>
+        <ShapePage :shapeColor="shapeColor" @response="(color)=>shapeColor=color"/>
       </section>
     </main>
   </template>
@@ -89,8 +89,29 @@
       font-family: 'Noto Sans Mono', monospace;
     }
 
+    ::-webkit-scrollbar {
+      display: none;
+    }
+
+    .container{
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      gap: 0 10vw;
+    }
+
     .text{
       font-size: 2em;
+      margin:0;
+    }
+
+    .square{
+        width: 200px;
+        height: 200px;
+        /* background-color: red; */
+        /* box-shadow: 0 0 2px 2px red; */
     }
 
     .fullpage{

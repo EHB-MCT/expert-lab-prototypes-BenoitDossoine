@@ -1,11 +1,12 @@
 <script>
   import anime from 'animejs/lib/anime.es.js'
     export default {
+        props:{shapeColor:String},
         methods:{
             bounce(){
                 anime(
                     {
-                        targets:'.square',
+                        targets:'.bouncingSquare',
                         translateY: -50,
                         duration: 300,
                         direction: 'alternate',
@@ -28,10 +29,11 @@
             }
         },
         mounted(){
+            console.log(this.shapeColor)
             let timeline = anime.timeline();
             timeline.add(
                 {
-                    targets:'.square',
+                    targets:'.bouncingSquare',
                     opacity: [0,1],
                     duration: 2000,
                 }
@@ -45,14 +47,22 @@
                     easing: "easeOutExpo",
                     delay:(el,i)=>100*i,
                 },'-=1000')
+        },
+        computed:{
+            cssProps(){
+                console.log(this.shapeColor)
+                return{
+                    '--shapeColor': this.shapeColor
+                }
+            }
         }
     }
 </script>
 
 <template>
     <div class="container homepageContainer">
-        <div class="squareContainer">
-            <div class="square" @mouseover="bounce"></div>
+        <div class="squareContainer" :style="cssProps">
+            <div class="square bouncingSquare" @mouseover.once="bounce"></div>
         </div>
         <div class="textContainer">
             <p class="text" id="introText">
@@ -64,7 +74,7 @@
             <span class="letter">i</span>
             <span class="letter">s </span> 
             <span class="letter">&nbsp;</span>
-            <span class="letter">s</span>
+            <span class="letter">S</span>
             <span class="letter">q</span>
             <span class="letter">u</span>
             <span class="letter">a</span>
@@ -78,29 +88,11 @@
     </div>
 </template>
 
-<style>
-    .container{
-        width: 100%;
-        height: 100%;
-
-        display: flex;
-        justify-content: center;
-        align-items: center;
-        gap: 0 10vw;
-    }
-
+<style scoped>
     .square{
-        width: 200px;
-        height: 200px;
-        background-color: red;
         opacity: 0;
-        box-shadow: 0 0 2px 5px red;
+        background-color: var(--shapeColor)
     }
-
-    .text{
-        margin: 0;
-    }
-
     .happyText{
         opacity: 0;
     }
