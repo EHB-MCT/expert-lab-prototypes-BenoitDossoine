@@ -35,7 +35,11 @@
 </script>
 <template>
     <div class="container">
-        <div class="text">Square likes to change color!</div>
+        <div class="text">
+            <span v-if="shape=='square'">Square</span>
+            <span v-else-if="shape=='rectangle'">Rectangle</span>
+            <span v-else-if="shape=='circle'">Circle</span>
+             likes to change color!</div>
         <div class="squareContainer" :style="cssProps">
             <div class="squareColor" :class="shape"></div>
         </div>

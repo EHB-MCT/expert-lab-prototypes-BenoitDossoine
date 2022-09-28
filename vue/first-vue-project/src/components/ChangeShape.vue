@@ -46,7 +46,12 @@
 </script>
 <template>
     <div class="container" :style="cssProps">
-        <p class="text">Square even likes to change shapes sometimes!</p>
+        <p class="text">
+            <span v-if="shape=='square'">Square</span>
+            <span v-if="shape=='rectangle'">Rectangle</span>
+            <span v-if="shape=='circle'">Circle</span> 
+            even likes to change shapes sometimes!
+        </p>
         <div class="row">
             <div class="circleBtn shapeBtn"><button @click="morphShape('circle')"></button></div>
             <div class="morphShape"></div>
@@ -107,4 +112,6 @@
         width: 100%;
         height: 100%;
     }
+
+    
 </style>
