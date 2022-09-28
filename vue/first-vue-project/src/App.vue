@@ -1,20 +1,23 @@
 <script>
   import HomePage from './components/HomePage.vue'
   import ShapePage from './components/ShapePage.vue'
+  import ChangeShape from './components/ChangeShape.vue';
   export default {
     data(){
       return{
         inMove:false,
-        inMoveDelay:400,
+        inMoveDelay:1000,
         activeSection:0,
         offsets:[],
         shapeColor: '#ff3914',
+        shape: 'square'
       }
     },
 
     components:{
       HomePage,
-      ShapePage
+      ShapePage,
+      ChangeShape
     },
     methods:{
       calculateSectionOffset(){
@@ -55,9 +58,9 @@
       window.addEventListener('mousewheel',(e)=>{
         let delta = e.wheelDelta;
         if(delta>100 && !this.inMove){
-          this.moveUp();
-        } else if(delta<-100 && !this.inMove){
           this.moveDown();
+        } else if(delta<-100 && !this.inMove){
+          this.moveUp();
         }
         e.preventDefault();
         return false;
@@ -73,10 +76,13 @@
   <template>
     <main>
       <section class="fullpage">
-        <HomePage :shapeColor="shapeColor"/>
+        <HomePage :shapeColor="shapeColor" :shape="shape"/>
       </section>
       <section class="fullpage">
-        <ShapePage :shapeColor="shapeColor" @response="(color)=>shapeColor=color"/>
+        <ShapePage :shapeColor="shapeColor" :shape="shape" @response="(color)=>shapeColor=color"/>
+      </section>
+      <section class="fullpage">
+        <ChangeShape :shapeColor="shapeColor" :shape="shape" @response="(shapeChange)=>shape=shapeChange"/>
       </section>
     </main>
   </template>
@@ -110,8 +116,17 @@
     .square{
         width: 200px;
         height: 200px;
-        /* background-color: red; */
-        /* box-shadow: 0 0 2px 2px red; */
+    }
+    
+    .rectangle{
+      width: 200px;
+      height: 240px;
+    }
+
+    .circle{
+      width: 200px;
+      height: 200px;
+      border-radius: 50%;
     }
 
     .fullpage{

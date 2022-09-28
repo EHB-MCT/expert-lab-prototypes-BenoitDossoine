@@ -6,7 +6,7 @@
                 currentColor: '#ff3914', 
             }
         },
-        props:{shapeColor:String},
+        props:{shapeColor:String,shape:String},
         emits: ['response'],
         methods:{
             changeColor(e){
@@ -37,7 +37,7 @@
     <div class="container">
         <div class="text">Square likes to change color!</div>
         <div class="squareContainer" :style="cssProps">
-            <div class="square squareColor"></div>
+            <div class="squareColor" :class="shape"></div>
         </div>
         <div class="btnsContainer">
             <button id="blueBtn" data-color="#04d9ff" @click="changeColor">Blue</button>
@@ -88,5 +88,18 @@
 
     .square{
         background-color: var(--shapeColor);
+    }
+
+    .rectangle{
+        width: 200px;
+        height: 240px;
+        background-color: var(--shapeColor)
+    }
+    
+    .circle{
+        width: 200px;
+        height: 200px;
+        border-radius: 50%;
+        background-color: var(--shapeColor)
     }
 </style>
