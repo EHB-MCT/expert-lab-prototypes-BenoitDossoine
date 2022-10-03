@@ -1,0 +1,18 @@
+#homepageContainer{
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .homepageBtnContainer{
+        display: flex;
+        gap: 50px;
+    }
+
+    .introText{
+        font-size: 1.4em;
+    }
+}
