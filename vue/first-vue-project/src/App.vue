@@ -1,7 +1,8 @@
 <script>
   import HomePage from './components/HomePage.vue'
   import ShapePage from './components/ShapePage.vue'
-  import ChangeShape from './components/ChangeShape.vue';
+  import ChangeShape from './components/ChangeShape.vue'
+  import LabPageVue from './components/LabPage.vue';
   export default {
     data(){
       return{
@@ -17,7 +18,8 @@
     components:{
       HomePage,
       ShapePage,
-      ChangeShape
+      ChangeShape,
+      LabPageVue
     },
     methods:{
       calculateSectionOffset(){
@@ -83,6 +85,9 @@
       </section>
       <section class="fullpage">
         <ChangeShape :shapeColor="shapeColor" :shape="shape" @response="(shapeChange)=>shape=shapeChange"/>
+      </section>
+      <section class="fullpage">
+        <LabPageVue :shapeColor="shapeColor" :shape="shape"></LabPageVue>
       </section>
     </main>
   </template>
