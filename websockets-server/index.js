@@ -22,17 +22,21 @@ wsServer.on('request',function(request){
     console.log((new Date()) + 'Received a new connection from origin ' + request.origin);
 
     const connection = request.accept(null,request.origin);
+
     clients[userId] = connection;
     console.log('connected: ' + userId + ' in ' + Object.getOwnPropertyNames(clients));
 
     connection.on('message', function(message){
         if(message.type == 'utf8'){
-            console.log('Received message: ', message.utf8Data);
-
             for(key in clients){
                 clients[key].sendUTF(message.utf8Data);
-                console.log('sent message to ', clients[key] )
             }
         }
+    })
+
+    connection.on('close', ()=>{
+        delete clients[userId];
+        console.log(`Socket ${userId} disconnected`)
+        connection = null;
     })
 });
