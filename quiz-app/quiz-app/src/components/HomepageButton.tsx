@@ -1,6 +1,12 @@
 function HomepageButton(props:any){
+    const handleClick = (event:any)=>{
+        props.onStateChange();
+    }
     return(
-        <button className="homepageBtn">{props.content}</button>
+        <button 
+        className={props.state?'active' + " homepageBtn":'inactive' + " homepageBtn"}
+        onClick={event => handleClick(event)}
+        >{props.content}</button>
     )
 }
 

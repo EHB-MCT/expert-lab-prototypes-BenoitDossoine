@@ -12,6 +12,25 @@
         gap: 50px;
     }
 
+    .continueBtn{
+        align-self: end;
+
+        margin-top: 50px;
+        margin-right: 20vw;
+        padding: 0.8em 1em;
+
+        border: 2px solid $text_color;
+        border-radius: 8px;
+        background-color: $background_color;
+        color: $text_color;
+
+        font-size: 1.2em;
+        text-transform: uppercase;
+
+        display: flex;
+        align-items: center;
+    }
+
     .introText{
         font-size: 1.4em;
     }
