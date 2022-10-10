@@ -8,7 +8,12 @@ function Homepage(props:any){
     const [playerState,setPlayerState] = useState(true);
     const navigate = useNavigate();
     const continueClick = ()=>{
-        props.client.emit("join_game",props.client.id);
+        if(props.gameState.players.length<2){
+            props.client.emit("join_game",props.client.id);
+            navigate("/quiz");
+        } else{
+            alert("Too much players in there, sorry!");
+        }
     }
 
     return(

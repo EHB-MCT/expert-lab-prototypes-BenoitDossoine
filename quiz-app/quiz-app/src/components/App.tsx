@@ -5,29 +5,35 @@ import Masterpage from "./Masterpage";
 import { socketsService } from '../services/SocketsService';
 
 import {io} from "socket.io-client";
-import Player from '../interfaces/Player';
-import { StoreState } from "../Store/store.types";
-import { useDispatch, useSelector } from "react-redux";
-import { selectPlayerList } from '../Store/Players/Selectors';
-import { updatePlayers } from '../Store/Players/Actions';
+import GameState from '../interfaces/GameState';
+import Quiz from './Quiz';
 
 const client = io('ws://127.0.0.1:8000');
 function App() {
 
-  const playerList = useSelector<StoreState, Player[]>(
-    selectPlayerList
-  )
+  const [gameState,setGameState] = useState<GameState>({
+    "players": [],
+    "playing": false,
+  })
 
-  // const [players,setPlayers] = useState<Player[]>([{id: 235, name: 'Benoit', type: 'Game Master'}]);
-  const dispatch = useDispatch();
   useEffect(()=>{
-    socketsService.onConnect();
+    client.on("connect",()=>{
+      console.log("connected!");
+      client.on("player_joined",(player:any)=>{
+        const newPlayerList = {"players":gameState.players.push(player)}; 
+        setGameState(gameState => {
+          return{...gameState,newPlayerList}
+        })
+      })
+    })
+
   },[])
+
   return (
     <Routes>
-      <Route path="/" element={<Homepage client={client}/>}></Route>
+      <Route path="/" element={<Homepage client={client} gameState={gameState}/>}></Route>
       <Route path="/admin" element={<Masterpage/>}></Route>
-      <Route path="/quiz"></Route>
+      <Route path="/quiz" element={<Quiz client={client} gameState={gameState}/>}></Route>
     </Routes>
   );
 }
