@@ -4,7 +4,7 @@ function HomepageButton(props:any){
     }
     return(
         <button 
-        className={props.state?'active' + " homepageBtn":'inactive' + " homepageBtn"}
+        className={props.state?"active homepageBtn":"inactive homepageBtn"}
         onClick={event => handleClick(event)}
         >{props.content}</button>
     )

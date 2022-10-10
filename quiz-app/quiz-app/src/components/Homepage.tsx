@@ -1,8 +1,7 @@
 import HomepageButton from "./HomepageButton"
-import {useState,useEffect} from "react"
+import {useState} from "react"
 import {ArrowRight} from "react-feather"
 import {useNavigate} from "react-router-dom";
-import { client } from "websocket";
 
 function Homepage(props:any){
     const [playerState,setPlayerState] = useState(true);
