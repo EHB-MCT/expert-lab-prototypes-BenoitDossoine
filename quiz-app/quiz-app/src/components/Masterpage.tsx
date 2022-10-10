@@ -1,21 +1,11 @@
 import {useState,useEffect} from 'react';
 import { triviaService } from '../services/TriviaService';
-import Player from '../interfaces/Player';
-import { useDispatch, useSelector } from "react-redux";
-import { selectPlayerList } from '../Store/Players/Selectors';
-import { StoreState } from "../Store/store.types";
-
-
 
 function Masterpage(){
     let [categories,setCategories] = useState(null);
     let [loading,setLoading] = useState(true);
     let [settings,setSettings] = useState({})
 
-    const playerList = useSelector<StoreState, Player[]>(
-        selectPlayerList
-      )
-    
     useEffect(()=>{
         setLoading(true);
         triviaService.fetchCategories()
