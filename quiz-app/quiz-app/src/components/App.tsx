@@ -12,13 +12,14 @@ import Quiz from './Quiz';
 const client = io('ws://127.0.0.1:8000');
 
 function App() {
-  const navigate = useNavigate();
-  const [gameState,setGameState] = useState<GameState>({
+  const originalState={
     "player": {id:"",score:0,status:""},
     "playing": false,
     "questions":[],
     "questionNumber":0,
-  })
+  }
+  const navigate = useNavigate();
+  const [gameState,setGameState] = useState<GameState>(originalState)
 
   useEffect(()=>{
     client.on("connect",()=>{
@@ -36,7 +37,6 @@ function App() {
       client.on("answer",()=>{
         const player = gameState.player;
         player.status = "answered";
-        console.log(gameState);
         setGameState((gameState)=>{return{...gameState,player:player}})
       })
 
@@ -50,6 +50,7 @@ function App() {
 
       client.on("end_game",()=>{
         navigate("/");
+        setGameState((gameState)=>{return{...originalState}})
       })
 
     })

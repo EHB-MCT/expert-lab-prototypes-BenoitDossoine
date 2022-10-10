@@ -64,7 +64,6 @@ function Quiz(props:any){
 
     function endGame(){
         props.client.emit("end_player");
-
     }
 
     return(

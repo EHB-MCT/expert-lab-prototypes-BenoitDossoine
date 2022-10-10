@@ -28,9 +28,10 @@ io.on('connection', (socket)=>{
     console.log("user connected");
     socket.on("join_game",(playerId)=>{
         if(gameState.players.length<2){
-
+            
             const newPlayer = {"id":playerId,"score":0,"status":"waiting"}
             gameState.players.push(newPlayer);
+            console.log(gameState);
             io.to(playerId).emit("player_joined",newPlayer)
 
             if(gameState.players.length == 2){
@@ -63,6 +64,7 @@ io.on('connection', (socket)=>{
         gameState.players.find(player => player.id === socket.id).status="finished";
         if(gameState.players.every(player=>player.status==="finished")){
             io.emit("end_game");
+            gameState.players = [];
         }
     })
 
