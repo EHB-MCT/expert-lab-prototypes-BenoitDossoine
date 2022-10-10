@@ -6,15 +6,11 @@ import {useNavigate} from "react-router-dom";
 function Homepage(props:any){
     const [playerState,setPlayerState] = useState(true);
     const navigate = useNavigate();
-    const continueClick = ()=>{
-        if(props.gameState.players.length<2){
-            props.client.emit("join_game",props.client.id);
-            navigate("/quiz");
-        } else{
-            alert("Too much players in there, sorry!");
-        }
-    }
 
+    const continueClick = ()=>{
+        props.client.emit("join_game",props.client.id);
+    }
+    
     return(
         <div id="homepageContainer">
             <p className="introText">Welcome!</p>

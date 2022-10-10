@@ -1,15 +1,9 @@
+import { useNavigate } from "react-router-dom";
 
 function Quiz(props:any){
 
-    const questions = [
-        {
-            "question": "What is my name?",
-            "rightAnswer": "Benoit",
-            "wrongAnswers": ["Finn", "Ilyes"]
-        }
-    ]
-
-    let questionNumber = 0;
+    let questions = props.gameState.questions;
+    let navigate = useNavigate();
     function waitForSecondPlayer(){
         return(
             <div className="waitDiv">
@@ -21,12 +15,11 @@ function Quiz(props:any){
     }
 
     function startQuiz(){
-        console.log(props.gameState.players.find((player:any) => player.id==props.client.id).score)
         return(
             <>
-                {showQuestion(questionNumber)}
+                {showQuestion(props.gameState.questionNumber)}
                 <div className="scores">
-                    <p>Your score:{props.gameState.players.find((player:any) => player.id==props.client.id).score}</p>
+                    <p>Your score:{props.gameState.player.score}</p>
                 </div>
             </>
             
@@ -46,7 +39,11 @@ function Quiz(props:any){
                             <button
                             className="answer"
                             key={index}
-                            onClick={()=>checkAnswer(questionNumber,answer)}>
+                            disabled={props.gameState.player.status==="answered"}
+                            onClick={()=>{
+                                checkAnswer(questionNumber,answer);
+                                props.gameState.questionNumber===questions.length-1?endGame():props.gameState.questionNumber++;
+                                }}>
                                 {answer}
                             </button>
                         )
@@ -65,9 +62,14 @@ function Quiz(props:any){
         }
     }
 
+    function endGame(){
+        props.client.emit("end_player");
+
+    }
+
     return(
         <div className="quizContainer">
-            {props.gameState.players.length<2?waitForSecondPlayer():startQuiz()}
+            {props.gameState.playing?startQuiz():waitForSecondPlayer()}
         </div>
     )
 }

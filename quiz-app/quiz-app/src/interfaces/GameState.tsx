@@ -1,8 +1,11 @@
 import Player from "./Player";
+import Question from "./Question";
 
 interface GameState{
-    "players": Player[],
+    "player": Player,
     "playing": Boolean,
+    "questions": Question[],
+    "questionNumber": number
   }
 
 export default GameState
