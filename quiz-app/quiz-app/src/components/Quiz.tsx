@@ -1,9 +1,11 @@
+
 function Quiz(props:any){
+
     const questions = [
         {
             "question": "What is my name?",
             "rightAnswer": "Benoit",
-            "wrongAnswers": ["Mike", "Ilyes"]
+            "wrongAnswers": ["Finn", "Ilyes"]
         }
     ]
 
@@ -19,12 +21,15 @@ function Quiz(props:any){
     }
 
     function startQuiz(){
+        console.log(props.gameState.players.find((player:any) => player.id==props.client.id).score)
         return(
             <>
-                <div className="question">
-                    {showQuestion(questionNumber)}
-                </div> 
+                {showQuestion(questionNumber)}
+                <div className="scores">
+                    <p>Your score:{props.gameState.players.find((player:any) => player.id==props.client.id).score}</p>
+                </div>
             </>
+            
         )
     }
 
@@ -32,13 +37,18 @@ function Quiz(props:any){
         let allAnswers = [questions[questionNumber].rightAnswer,...questions[questionNumber].wrongAnswers];
         let shuffledAnswers = allAnswers.sort(()=>Math.random()-0.5);
         return(
-            <div className="question">
-                <p>{questions[questionNumber].question}</p>
+            <div className="questionContainer">
+                <p className="question">{questions[questionNumber].question}</p>
                 <div className="answers">
                     <>
                     {shuffledAnswers.map((answer,index)=>{
                         return(
-                            <button className="answer" key={index} onClick={()=>checkAnswer(questionNumber,answer)}>{answer}</button>
+                            <button
+                            className="answer"
+                            key={index}
+                            onClick={()=>checkAnswer(questionNumber,answer)}>
+                                {answer}
+                            </button>
                         )
                     })}
                     </>
@@ -48,10 +58,10 @@ function Quiz(props:any){
     }
 
     function checkAnswer(questionNumber:number,answer:String){
-        if(answer==questions[questionNumber].rightAnswer){
-            props.client.emit("right_answer",props.client.id);
+        if(answer===questions[questionNumber].rightAnswer){
+            props.client.emit("answer",{id:props.client.id,correct:true});
         } else {
-            props.client.emit("wrong_answer",props.client.id);
+            props.client.emit("answer",{id:props.client.id,correct:false});
         }
     }
 

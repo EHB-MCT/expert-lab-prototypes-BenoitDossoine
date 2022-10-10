@@ -12,15 +12,16 @@ io.on('connection', (socket)=>{
     console.log('a user connected');
     socket.on("join_game",(playerId)=>{
         console.log("User with id ", playerId, " has joined the game!");
-        io.emit("player_joined", playerId);
+        io.emit("player_joined",
+            {
+                "id":playerId,
+                "score":0,
+            }
+        );
     })
 
-    socket.on("right_answer",(playerId)=>{
-        console.log("User with id ",playerId, "gave a right answer! :-)")
-    })
-
-    socket.on("wrong_answer",(playerId)=>{
-        console.log("User with id ",playerId, "gave a wrong answer! :-(")
+    socket.on("answer",(data)=>{
+        io.emit("answer",{"id":data.id,"correct":data.correct});
     })
 
     socket.on('disconnect',()=>{

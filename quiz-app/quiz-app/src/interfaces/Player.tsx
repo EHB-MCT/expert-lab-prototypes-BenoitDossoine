@@ -1,7 +1,6 @@
 interface Player {
-    id:number,
-    name:string,
-    type:string
+    id:String,
+    score: number,
 }
 
 export default Player

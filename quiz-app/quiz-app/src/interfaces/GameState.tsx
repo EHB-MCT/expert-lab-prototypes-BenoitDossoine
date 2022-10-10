@@ -1,5 +1,7 @@
+import Player from "./Player";
+
 interface GameState{
-    "players": String[],
+    "players": Player[],
     "playing": Boolean,
   }
 

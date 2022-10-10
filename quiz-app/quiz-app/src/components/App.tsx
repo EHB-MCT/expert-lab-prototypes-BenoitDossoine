@@ -18,12 +18,22 @@ function App() {
 
   useEffect(()=>{
     client.on("connect",()=>{
-      console.log("connected!");
       client.on("player_joined",(player:any)=>{
         const newPlayerList = {"players":gameState.players.push(player)}; 
         setGameState(gameState => {
           return{...gameState,newPlayerList}
         })
+      })
+
+      
+      client.on("answer",(response:any)=>{
+        if(response.correct){
+          let players = gameState.players;
+          players.find(player => player.id === response.id)!.score++;
+          setGameState(gameState=>{
+            return{...gameState,"players":players}
+          })          
+        }
       })
     })
 
