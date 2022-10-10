@@ -1,42 +1,19 @@
-const webSocketsServerPort = 8000;
-const webSocketServer = require('websocket').server;
+const express = require('express');
 const http = require('http');
 
-const server = http.createServer();
-server.listen(webSocketsServerPort);
-console.log('listening on port ' + webSocketsServerPort);
-
-const wsServer = new webSocketServer({
-    httpServer:server,
+const app = express();
+const port = 8000;
+const server = http.createServer(app);
+const io = require("socket.io")(port,{
+    cors: "*"
 });
 
-const clients = {};
-
-const getUniqueId = () => {
-    const s4 = () => Math.floor((1 + Math.random())*0x10000).toString(16).substring(1);
-    return s4() + s4() + '-' + s4();
-}
-
-wsServer.on('request',function(request){
-    var userId = getUniqueId();
-    console.log((new Date()) + 'Received a new connection from origin ' + request.origin);
-
-    const connection = request.accept(null,request.origin);
-
-    clients[userId] = connection;
-    console.log('connected: ' + userId + ' in ' + Object.getOwnPropertyNames(clients));
-
-    connection.on('message', function(message){
-        if(message.type == 'utf8'){
-            for(key in clients){
-                clients[key].sendUTF(message.utf8Data);
-            }
-        }
+io.on('connection', (socket)=>{
+    console.log('a user connected');
+    socket.on("join_game",(playerId)=>{
+        console.log("User with id ", playerId, " has joined the game!");
     })
-
-    connection.on('close', ()=>{
-        delete clients[userId];
-        console.log(`Socket ${userId} disconnected`)
-        connection = null;
+    socket.on('disconnect',()=>{
+        console.log('user disconnected');
     })
-});
+})

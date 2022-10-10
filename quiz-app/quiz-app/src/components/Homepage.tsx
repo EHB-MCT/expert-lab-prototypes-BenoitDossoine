@@ -2,31 +2,13 @@ import HomepageButton from "./HomepageButton"
 import {useState,useEffect} from "react"
 import {ArrowRight} from "react-feather"
 import {useNavigate} from "react-router-dom";
+import { client } from "websocket";
 
 function Homepage(props:any){
     const [playerState,setPlayerState] = useState(true);
     const navigate = useNavigate();
     const continueClick = ()=>{
-        if(playerState){
-            props.client.send(JSON.stringify({
-                type:'playerUpdate',
-                msg:{id:235,
-                    name:'Sil',
-                    type:'Player'
-                    }
-            }));
-            navigate("/quiz");
-        } else {
-            props.client.send(JSON.stringify({
-                type:'playerUpdate',
-                msg:{id:235,
-                name:'Benoit',
-                type:'Game Master'
-                }
-            }))
-            navigate("/admin");
-        }
-
+        props.client.emit("join_game",props.client.id);
     }
 
     return(
