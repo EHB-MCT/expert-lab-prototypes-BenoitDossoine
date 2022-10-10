@@ -29,13 +29,11 @@ function App() {
     }
   },[dispatch])
   return (
-    <>
     <Routes>
       <Route path="/" element={<Homepage client={client}/>}></Route>
       <Route path="/admin" element={<Masterpage/>}></Route>
       <Route path="/quiz"></Route>
     </Routes>
-    </>
   );
 }
 
