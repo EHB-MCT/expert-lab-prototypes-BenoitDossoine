@@ -3,12 +3,11 @@ import { useNavigate } from "react-router-dom";
 function Quiz(props:any){
 
     let questions = props.gameState.questions;
-    let navigate = useNavigate();
     function waitForSecondPlayer(){
         return(
             <div className="waitDiv">
             <p>Welcome to the quiz!</p>
-            <p>You are player {props.client.id}</p>
+            <p>You are player {props.gameState.player.name}</p>
             <p>Let's wait for another player...</p>
             </div>
         )
@@ -19,7 +18,6 @@ function Quiz(props:any){
             <>
                 {showQuestion(props.gameState.questionNumber)}
             </>
-            
         )
     }
 
