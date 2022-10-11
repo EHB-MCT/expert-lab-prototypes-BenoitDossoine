@@ -1,10 +1,17 @@
+import {Link} from "react-router-dom";
 function Header(){
     return(
         <header>
             <ul className="nav">
-                <li className="navElement">Home</li>
-                <li className="navElement">Work</li>
-                <li className="navElement">About</li>
+                <li className="navElement">
+                    <Link to="/">Home</Link>
+                </li>
+                <li className="navElement">
+                    <Link to="/work">Work</Link>
+                </li>
+                <li className="navElement">
+                    <Link to="/about">About</Link>
+                </li>
             </ul>
         </header>
     )

@@ -1,4 +1,12 @@
 header{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 1;
+
+    width: 100vw;
+    box-sizing: border-box;
+
     margin: 20px 0;
     padding: 0 3vw;
 
@@ -16,7 +24,11 @@ header{
             position: relative;
             padding: 0 5px;
 
-            &:hover{
+            & a{
+                color: $text_color;
+            }
+
+            &:hover a{
                 transition: all 0.8s;
                 color: $background_color;
             }
@@ -38,6 +50,8 @@ header{
                 transform: scaleX(1);
                 transform-origin: left;
             }
+
+            
         }
     }
 }

@@ -1,6 +1,9 @@
 @import './abstract/variables.scss';
 
+@import './bases/reset.scss';
 @import './bases/body.scss';
 @import './bases/text.scss';
 
 @import './components/header.scss';
+
+@import './pages/homepage.scss';
