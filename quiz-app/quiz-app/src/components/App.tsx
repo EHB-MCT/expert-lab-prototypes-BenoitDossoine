@@ -31,6 +31,7 @@ function App() {
       })
 
       client.on("start_quiz",(questions)=>{
+        console.log(questions);
         setGameState((gameState)=>{return{...gameState,playing:true,questions:questions}});
       })
 
@@ -50,6 +51,10 @@ function App() {
         setGameState((gameState)=>{return{...gameState,player:player,questionNumber:newQuestionNumber}})
       })
 
+      client.on("master_joined",()=>{
+        navigate("/admin");
+      })
+
       client.on("end_game",(players)=>{
         setFinalPlayers(players);
         navigate("/scorepage")
@@ -63,7 +68,7 @@ function App() {
   return (
     <Routes>
       <Route path="/" element={<Homepage client={client} gameState={gameState}/>}></Route>
-      <Route path="/admin" element={<Masterpage/>}></Route>
+      <Route path="/admin" element={<Masterpage client={client}/>}></Route>
       <Route path="/quiz" element={<Quiz client={client} gameState={gameState}/>}></Route>
       <Route path="/scorepage" element={<Scorepage client={client} finalPlayers={finalPlayers}/>}></Route>
     </Routes>

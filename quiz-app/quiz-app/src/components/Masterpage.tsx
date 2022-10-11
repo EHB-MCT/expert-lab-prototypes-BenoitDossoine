@@ -1,10 +1,14 @@
 import {useState,useEffect} from 'react';
 import { triviaService } from '../services/TriviaService';
 
-function Masterpage(){
+function Masterpage(props:any){
     let [categories,setCategories] = useState(null);
     let [loading,setLoading] = useState(true);
-    let [settings,setSettings] = useState({})
+    let [settings,setSettings] = useState({
+        "categories": '9',
+        "numberOfQuestions":'1',
+        "difficulty": 'easy'
+    })
 
     useEffect(()=>{
         setLoading(true);
@@ -23,7 +27,7 @@ function Masterpage(){
 
     const handleSubmit = (event:any)=>{
         event.preventDefault();
-        console.log(settings)
+        props.client.emit("questions_submitted",settings);
     }
 
     const handleChange = (event:any)=>{
@@ -32,13 +36,9 @@ function Masterpage(){
         const name = target.name;
         
         setSettings({
+            ...settings,
             [name]:value
         });
-
-        setTimeout(()=>{
-            console.log(settings)
-        },1000         
-        )
     }
 
     return(
@@ -51,7 +51,7 @@ function Masterpage(){
                     {renderCategories(categories)}
                 </select>
                 <label htmlFor="">Number of questions</label>
-                <input name="numberOfQuestions" type="number" min="1" max="15" onChange={handleChange}/>
+                <input name="numberOfQuestions" type="number" min="1" max="15" onChange={handleChange} placeholder='1'/>
                 <label htmlFor="difficulty">Difficulty</label>
                 <select name="difficulty" id="quizDifficulty" onChange={handleChange}>
                     <option value="easy">Easy</option>

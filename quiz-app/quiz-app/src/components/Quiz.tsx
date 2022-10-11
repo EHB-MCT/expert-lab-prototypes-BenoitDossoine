@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 function Quiz(props:any){
 
     let questions = props.gameState.questions;
+    console.log(questions);
     function waitForSecondPlayer(){
         return(
             <div className="waitDiv">
@@ -22,7 +23,8 @@ function Quiz(props:any){
     }
 
     function showQuestion(questionNumber:number){
-        let allAnswers = [questions[questionNumber].rightAnswer,...questions[questionNumber].wrongAnswers];
+        
+        let allAnswers = [questions[questionNumber]["correct_answer"],...questions[questionNumber]["incorrect_answers"]];
         let shuffledAnswers = allAnswers.sort(()=>Math.random()-0.5);
         return(
             <div className="questionContainer">

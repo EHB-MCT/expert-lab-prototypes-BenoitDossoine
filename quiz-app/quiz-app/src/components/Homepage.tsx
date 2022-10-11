@@ -6,10 +6,13 @@ import {useNavigate} from "react-router-dom";
 function Homepage(props:any){
     const [playerState,setPlayerState] = useState(true);
     const [playerName,setPlayerName] = useState("");
-    const navigate = useNavigate();
 
     const continueClick = ()=>{
-        props.client.emit("join_game",playerName);
+        if(playerState){
+            props.client.emit("join_game",playerName);
+            return;
+        }
+        props.client.emit("join_master");
     }
     
     return(
@@ -22,7 +25,7 @@ function Homepage(props:any){
                 <HomepageButton state={playerState} onStateChange={()=>setPlayerState(true)} content='player'/>
                 <HomepageButton state={!playerState} onStateChange={()=>setPlayerState(false)} content='quiz master'/>
             </div>
-                <button className="continueBtn" onClick={()=>continueClick()}>Continue  <ArrowRight/></button>
+                <button className="continueBtn" onClick={()=>continueClick()}>Continue <ArrowRight/></button>
         </div>
     )
 }

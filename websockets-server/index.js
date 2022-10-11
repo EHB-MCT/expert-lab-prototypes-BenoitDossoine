@@ -1,6 +1,7 @@
 const express = require('express');
 const http = require('http');
 
+const fetch = (...args) => import('node-fetch').then(({default:fetch})=> fetch(...args));
 const app = express();
 const port = 8000;
 const server = http.createServer(app);
@@ -10,6 +11,7 @@ const io = require("socket.io")(port,{
 
 const gameState = {
     status : false,
+    master: {},
     players : [],
     questions: [
         {
@@ -25,9 +27,11 @@ const gameState = {
 }
 
 io.on('connection', (socket)=>{
+    /**
+     * Player logic
+     */
     socket.on("join_game",(playerName)=>{
         if(gameState.players.length<2){
-            
             const newPlayer = {"id":socket.id,"score":0,"status":"waiting","name":playerName}
             gameState.players.push(newPlayer);
             io.to(socket.id).emit("player_joined",newPlayer)
@@ -37,11 +41,9 @@ io.on('connection', (socket)=>{
                 setPlayerStatus("playing");
                 io.emit("start_quiz",gameState.questions);
             }
-            
         } else {
             io.to(playerId).emit("error","Too much players in this room!")
         }
-        console.log(gameState);
     })
 
     socket.on("answer",(data)=>{
@@ -60,6 +62,25 @@ io.on('connection', (socket)=>{
         }
     })
 
+    /**
+     * Quiz master logic
+     */
+    socket.on("join_master",()=>{
+        gameState.master = {"id":socket.id,"status":"creating"};
+        io.to(socket.id).emit("master_joined")
+    })
+
+    socket.on("questions_submitted",async (settings)=>{
+        let questions = await fetch(`https://opentdb.com/api.php?amount=${settings.numberOfQuestions}&category=${settings.categories}&difficulty=${settings.difficulty}&type=multiple`)
+            .then((response)=> response.json())
+            .then(data => data.results);
+        gameState.questions = questions;
+        console.log(gameState.questions);     
+    })
+
+    /**
+     * End of game logic
+     */
     socket.on("end_player",()=>{
         gameState.players.find(player => player.id === socket.id).status="finished";
         if(gameState.players.every(player=>player.status==="finished")){
@@ -67,6 +88,8 @@ io.on('connection', (socket)=>{
             gameState.players = [];
         }
     })
+
+
 
     socket.on('disconnect',()=>{
         if(gameState.players.find(player=>player.id === socket.id)){
