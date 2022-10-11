@@ -66,8 +66,12 @@ io.on('connection', (socket)=>{
      * Quiz master logic
      */
     socket.on("join_master",()=>{
-        gameState.master = {"id":socket.id,"status":"creating"};
-        io.to(socket.id).emit("master_joined")
+        if(Object.keys(gameState.master).length == 0){
+            gameState.master = {"id":socket.id,"status":"creating"};
+            io.to(socket.id).emit("master_joined");
+        } else {
+            io.to(socket.id).emit("error","There already is a quiz master!");
+        }
     })
 
     socket.on("questions_submitted",async (settings)=>{
@@ -95,6 +99,8 @@ io.on('connection', (socket)=>{
         if(gameState.players.find(player=>player.id === socket.id)){
             let index = gameState.players.indexOf(gameState.players.find(player=>player.id === socket.id));
             gameState.players.splice(index,1);
+        } else if (gameState.master.id === socket.id) {
+            gameState.master = {};
         }
     })
 })
