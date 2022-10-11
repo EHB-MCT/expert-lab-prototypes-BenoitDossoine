@@ -1,0 +1,43 @@
+header{
+    margin: 20px 0;
+    padding: 0 3vw;
+
+    ul.nav{
+        list-style: none;
+        padding: 0;
+        margin: 0;
+    
+        display: flex;
+        flex-direction: row;
+        justify-content: flex-end;
+        gap: 50px;
+
+        .navElement{
+            position: relative;
+            padding: 0 5px;
+
+            &:hover{
+                transition: all 0.8s;
+                color: $background_color;
+            }
+            &:before{
+                content:'';
+                position: absolute;
+                top: 0;
+                left:0;
+                width: 100%;
+                height: 100%;
+                color: $background_color;
+                background-color: $text_color;
+                transform: scaleX(0);
+                z-index: -1;
+                mix-blend-mode: difference;
+            }
+            &:hover:before{
+                transition: transform 0.4s;
+                transform: scaleX(1);
+                transform-origin: left;
+            }
+        }
+    }
+}
