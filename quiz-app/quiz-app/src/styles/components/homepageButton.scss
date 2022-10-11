@@ -1,0 +1,23 @@
+.homepageBtn{
+    padding: 0.8em 1em;
+
+    font-family: $font_family;
+    font-size: 1.1em;
+    text-transform: uppercase;
+
+    background-color: $background_color;
+    color: $text_color;
+
+    border: 2px solid $text_color;
+    border-radius: 8px;
+
+    &.active{
+        color: green;
+        border-color: green;
+        transform: scale(1.05);
+    }
+
+    &:hover{
+        transform: scale(1.05);
+    }
+}
