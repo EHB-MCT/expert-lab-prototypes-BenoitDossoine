@@ -36,6 +36,7 @@ io.on('connection', (socket)=>{
 
             if(gameState.players.length == 2){
                 gameState.status = true;
+                setPlayerStatus("playing");
                 io.emit("start_quiz",gameState.questions);
             }
             
@@ -63,7 +64,7 @@ io.on('connection', (socket)=>{
     socket.on("end_player",()=>{
         gameState.players.find(player => player.id === socket.id).status="finished";
         if(gameState.players.every(player=>player.status==="finished")){
-            io.emit("end_game");
+            io.emit("end_game",gameState.players);
             gameState.players = [];
         }
     })

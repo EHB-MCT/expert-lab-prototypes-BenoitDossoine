@@ -1,0 +1,37 @@
+.scorepageContainer{
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+
+    h2{
+        font-weight: 300;
+    }
+
+    .scoreContainer{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+
+        gap: 15vw;
+
+        p{
+            font-size: 2em;
+        }
+    }
+
+    .quitBtn{
+        background-color: transparent;
+        border: 2px solid $text-color;
+        color: $text-color;
+        text-transform: uppercase;
+
+        padding: 0.6em 0.8em;
+        border-radius: 5px;
+    }
+
+}

@@ -6,8 +6,9 @@ import { socketsService } from '../services/SocketsService';
 
 import {io} from "socket.io-client";
 import GameState from '../interfaces/GameState';
-import Player from '../interfaces/Player';
 import Quiz from './Quiz';
+import Scorepage from './Scorepage';
+import Player from '../interfaces/Player';
 
 const client = io('ws://127.0.0.1:8000');
 
@@ -20,6 +21,7 @@ function App() {
   }
   const navigate = useNavigate();
   const [gameState,setGameState] = useState<GameState>(originalState)
+  const [finalPlayers,setFinalPlayers] = useState<Player[]>([]);
 
   useEffect(()=>{
     client.on("connect",()=>{
@@ -48,8 +50,9 @@ function App() {
         setGameState((gameState)=>{return{...gameState,player:player,questionNumber:newQuestionNumber}})
       })
 
-      client.on("end_game",()=>{
-        navigate("/");
+      client.on("end_game",(players)=>{
+        setFinalPlayers(players);
+        navigate("/scorepage")
         setGameState((gameState)=>{return{...originalState}})
       })
 
@@ -62,6 +65,7 @@ function App() {
       <Route path="/" element={<Homepage client={client} gameState={gameState}/>}></Route>
       <Route path="/admin" element={<Masterpage/>}></Route>
       <Route path="/quiz" element={<Quiz client={client} gameState={gameState}/>}></Route>
+      <Route path="/scorepage" element={<Scorepage client={client} finalPlayers={finalPlayers}/>}></Route>
     </Routes>
   );
 }

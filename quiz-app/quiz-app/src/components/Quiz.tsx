@@ -18,9 +18,6 @@ function Quiz(props:any){
         return(
             <>
                 {showQuestion(props.gameState.questionNumber)}
-                <div className="scores">
-                    <p>Your score:{props.gameState.player.score}</p>
-                </div>
             </>
             
         )
@@ -31,26 +28,31 @@ function Quiz(props:any){
         let shuffledAnswers = allAnswers.sort(()=>Math.random()-0.5);
         return(
             <div className="questionContainer">
-                <p className="question">{questions[questionNumber].question}</p>
-                <div className="answers">
-                    <>
-                    {shuffledAnswers.map((answer,index)=>{
-                        return(
-                            <button
-                            className="answer"
-                            key={index}
-                            disabled={props.gameState.player.status==="answered"}
-                            onClick={()=>{
-                                checkAnswer(questionNumber,answer);
-                                props.gameState.questionNumber===questions.length-1?endGame():props.gameState.questionNumber++;
-                                }}>
-                                {answer}
-                            </button>
-                        )
-                    })}
+                {props.gameState.player.status==="answered"?
+                        <div>
+                            <p>Waiting for the other player to answer...</p>
+                        </div>
+                    :<>
+                        <p className="question">{questions[questionNumber].question}</p>
+                        <div className="answers">
+                            {shuffledAnswers.map((answer:string,index:number)=>{
+                                return(
+                                    <button
+                                    className="answer"
+                                    key={index}
+                                    disabled={props.gameState.player.status==="answered"}
+                                    onClick={()=>{
+                                        checkAnswer(questionNumber,answer);
+                                        props.gameState.questionNumber===questions.length-1?endGame():props.gameState.questionNumber++;
+                                    }}>
+                                    {answer}
+                                    </button>
+                                    )
+                                })
+                            }
+                        </div>
                     </>
-                </div>
-            </div>
+            }</div>
         )
     }
 
