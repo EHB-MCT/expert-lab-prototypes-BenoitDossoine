@@ -2,6 +2,8 @@ import { useNavigate } from 'react-router-dom';
 import Player from '../interfaces/Player'
 function Scorepage(props:any){
     const navigate = useNavigate();
+    console.log(props.finalPlayers);
+    
     return(
         <div className="scorepageContainer">
             <h2>Final scores!</h2>
@@ -9,7 +11,7 @@ function Scorepage(props:any){
                 props.finalPlayers.map((player:Player)=>{
                     return(
                         <div className="scoreContainer">
-                            <p>{player.id}</p>
+                            <p>{player.name}</p>
                             <p>{player.score}</p>
                         </div>
                     );

@@ -25,12 +25,12 @@ const gameState = {
 }
 
 io.on('connection', (socket)=>{
-    socket.on("join_game",(playerId)=>{
+    socket.on("join_game",(playerName)=>{
         if(gameState.players.length<2){
             
-            const newPlayer = {"id":playerId,"score":0,"status":"waiting"}
+            const newPlayer = {"id":socket.id,"score":0,"status":"waiting","name":playerName}
             gameState.players.push(newPlayer);
-            io.to(playerId).emit("player_joined",newPlayer)
+            io.to(socket.id).emit("player_joined",newPlayer)
 
             if(gameState.players.length == 2){
                 gameState.status = true;
@@ -41,6 +41,7 @@ io.on('connection', (socket)=>{
         } else {
             io.to(playerId).emit("error","Too much players in this room!")
         }
+        console.log(gameState);
     })
 
     socket.on("answer",(data)=>{

@@ -14,7 +14,7 @@ const client = io('ws://127.0.0.1:8000');
 
 function App() {
   const originalState={
-    "player": {id:"",score:0,status:""},
+    "player": {id:"",score:0,status:"",name:""},
     "playing": false,
     "questions":[],
     "questionNumber":0,

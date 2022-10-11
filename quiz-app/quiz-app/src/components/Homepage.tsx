@@ -5,15 +5,18 @@ import {useNavigate} from "react-router-dom";
 
 function Homepage(props:any){
     const [playerState,setPlayerState] = useState(true);
+    const [playerName,setPlayerName] = useState("");
     const navigate = useNavigate();
 
     const continueClick = ()=>{
-        props.client.emit("join_game",props.client.id);
+        props.client.emit("join_game",playerName);
     }
     
     return(
         <div id="homepageContainer">
             <p className="introText">Welcome!</p>
+            <p>What's your name?</p>
+            <input id="nameInput" type="text" placeholder="Write your name" onChange={(e)=>setPlayerName(e.target.value)} />
             <p className="introText">Choose your player status:</p>
             <div className="homepageBtnContainer">
                 <HomepageButton state={playerState} onStateChange={()=>setPlayerState(true)} content='player'/>
