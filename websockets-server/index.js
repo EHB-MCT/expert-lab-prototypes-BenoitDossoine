@@ -25,13 +25,11 @@ const gameState = {
 }
 
 io.on('connection', (socket)=>{
-    console.log("user connected");
     socket.on("join_game",(playerId)=>{
         if(gameState.players.length<2){
             
             const newPlayer = {"id":playerId,"score":0,"status":"waiting"}
             gameState.players.push(newPlayer);
-            console.log(gameState);
             io.to(playerId).emit("player_joined",newPlayer)
 
             if(gameState.players.length == 2){
