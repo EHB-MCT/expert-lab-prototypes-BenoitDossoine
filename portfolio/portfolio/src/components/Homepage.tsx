@@ -1,21 +1,46 @@
-import {useEffect, useRef} from 'react';
-import { gsap } from "gsap";
+import {useEffect} from 'react';
+import TransitionOverlay from './TransitionOverlay';
+import {motion} from "framer-motion";
+
 function Homepage(){
-    useEffect(()=>{
-       gsap.timeline()
-        .to(".overlay",{right:0})
-        .to(".contentContainer",{opacity:1})
-        .to(".overlay",{y:"100vw"},"+=0.5");
-    },[]);
+    
     return(
-        <div className="homepageContainer">
-            <div className="overlay">
-                <p className="overlayText">Home.</p>
+        <>
+            <TransitionOverlay text="Home."></TransitionOverlay>
+            <div className="homepageContainer pageContainer">
+                <div className="landing">
+                    <p className='title'>Benoit Dossoine.</p>
             </div>
-            <div className="contentContainer">
-                <div className="square"></div>
+            <div className="extraContent">
+                <h2>This is a test</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
+                <h2>This is a test</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
+                <h2>This is a test</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
+                <h2>This is a test</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
+                <h2>This is a test</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
+                <h2>This is a test</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
+                <h2>This is a test</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
+                <h2>This is a test</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
+                <h2>This is a test</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
+                <h2>This is a test</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
+                <h2>This is a test</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
+                <h2>This is a test</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
+                <h2>This is a test</h2>
+                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
             </div>
         </div>
+    </>
     )
 }
 

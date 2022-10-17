@@ -1,0 +1,34 @@
+.overlayContainer{
+    position: fixed;
+    height: 100%;
+    width: 100%;
+    background-color: transparent;
+    
+    .overlay{
+        z-index: 100;
+        position: absolute;
+        top: 0;
+        left: 0;
+    
+        height: 100vh;
+        width: 100vw;
+    
+        background-color: white;
+    
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    
+        .overlayText{
+            z-index: 100;
+            color: $background_color;
+            font-size: 50px;
+        }
+
+    }
+
+    .exit{
+        z-index: 100;
+        transform: translateX(-100vw);
+    }
+}
