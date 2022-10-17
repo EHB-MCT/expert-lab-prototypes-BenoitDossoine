@@ -6,7 +6,6 @@
     z-index: 100;
     transform: translateX(100vw);
     .overlay{
-        z-index: 100;
         position: absolute;
         top: 0;
         left: 0;
@@ -21,14 +20,9 @@
         align-items: center;
     
         .overlayText{
-            z-index: 100;
             color: $background_color;
             font-size: 50px;
         }
 
-    }
-
-    .exit{
-        z-index: 100;
     }
 }
