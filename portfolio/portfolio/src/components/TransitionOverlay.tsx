@@ -5,8 +5,8 @@ function TransitionOverlay(props:any){
     return(
         <div className="overlayContainer">
             <motion.div 
-                    initial={{x:'0vw',y:'0vh'}}
-                    animate={{x:'0vw',y:'-100vh'}}
+                    initial={{x:'-100vw',y:'0vh'}}
+                    animate={{x:'-100vw',y:'-100vh'}}
                     transition={{delay:0.5}}
                     className="overlay entry">
                         <motion.p 
@@ -18,8 +18,8 @@ function TransitionOverlay(props:any){
                         </motion.p>
             </motion.div>
             <motion.div
-                initial={{x:'-100vw'}}
-                exit={{x:'0vw'}}
+                initial={{x:'0vw'}}
+                exit={{x:'-100vw'}}
                 className="exit overlay">
             </motion.div>
         </div>

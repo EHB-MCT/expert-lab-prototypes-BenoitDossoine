@@ -2,8 +2,9 @@
     position: fixed;
     height: 100%;
     width: 100%;
-    background-color: transparent;
-    
+    background-color: red;
+    z-index: 100;
+    transform: translateX(100vw);
     .overlay{
         z-index: 100;
         position: absolute;
@@ -29,6 +30,5 @@
 
     .exit{
         z-index: 100;
-        transform: translateX(-100vw);
     }
 }
