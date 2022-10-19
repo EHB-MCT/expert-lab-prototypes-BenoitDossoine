@@ -7,6 +7,8 @@ function Upload(){
         setFile(event.target.files[0]);
     }
 
+    
+
     const onClickHandler = ()=>{
         const data = new FormData();
         data.append('file',file);

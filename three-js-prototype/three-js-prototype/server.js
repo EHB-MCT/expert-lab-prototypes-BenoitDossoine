@@ -1,6 +1,7 @@
 const express = require('express');
 const app = express();
 const multer = require('multer');
+const fs = require('fs');
 const cors = require('cors');
 
 app.use(cors());
@@ -23,6 +24,17 @@ app.post('/upload',function(req,res){
         }
         return res.status(200).send(req.file);
     })
+})
+
+app.get('/files',function(req,res){
+    const pathName = __dirname+'/public/models';
+    let files = fs.readdir(pathName,(error,files)=>{
+        if(error){
+        console.log(error);
+        }
+        console.log(files);
+        return res.status(200).send(files);
+  })
 })
 
 app.listen(8000,()=>console.log('App running on port 8000'));
