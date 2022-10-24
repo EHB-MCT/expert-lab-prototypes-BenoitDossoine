@@ -8,10 +8,7 @@ import ModelPreviewContainer from './components/ModelPreviewContainer';
 function App() {
   return (
     <div className="App">
-      <>
         <ModelPreviewContainer></ModelPreviewContainer>
-        <Upload></Upload>
-      </>
     </div>
   );
 }
