@@ -24,7 +24,8 @@ function Upload(){
     return(
         <form>
             <input type="file" name="file" id="fileUpload"
-            onChange={onChangeHandler} />
+            onChange={onChangeHandler}
+            accept="glb" />
             <button type="button" onClick={onClickHandler}>Upload model</button>
         </form>
     )

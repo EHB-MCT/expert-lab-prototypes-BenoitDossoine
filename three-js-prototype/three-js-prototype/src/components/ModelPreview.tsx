@@ -5,10 +5,12 @@ import {useState} from 'react';
 
 function ModelPreview(props:any){
     const [loaded,setLoaded] = useState(false)
-    const model = useLoader(GLTFLoader,`./models/${props.model}`);        
+    const model = useLoader(GLTFLoader,`./models/${props.model}`); 
+     
     return(
         <div className="canvasContainer">
             <Canvas
+            
             shadows
             camera={ {
                 fov: 45,
@@ -19,7 +21,14 @@ function ModelPreview(props:any){
                 <OrbitControls makeDefault/>
                 <directionalLight castShadow position={ [ 1, 2, 3 ] } intensity={ 1.5 } />
                 <ambientLight intensity={ 0.5 } />
-                <primitive object={model.scene}/>
+                <primitive
+                    object={model.scene}
+                    onClick={(event:any)=>{
+                        console.log(event.object);
+                        event.stopPropagation();
+                        event.object.material.color.set('red');
+                    }}
+                />
             </Canvas>
         </div>
     )
