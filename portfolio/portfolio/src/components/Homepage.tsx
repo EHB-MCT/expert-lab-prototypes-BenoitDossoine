@@ -1,50 +1,13 @@
-import {useEffect} from 'react';
-import TransitionOverlay from './TransitionOverlay';
-import {motion} from "framer-motion";
+import Header from './Header';
+import Title from './Title';
 
 function Homepage(){
     
     return(
-        <>
-            <TransitionOverlay text="Home."></TransitionOverlay>
-            <div className="homepageContainer pageContainer">
-                <div className="landing">
-                    <p className='title'>Benoit Dossoine.</p>
-            </div>
-            <motion.div className="extraContent"
-                initial={{opacity:1}}
-                whileInView={{opacity:1}}
-                viewport={{margin:"-100px",once:true}}
-                transition={{easing:"ease",duration:1}}
-
-            >
-                <h2>This is a test</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
-                <h2>This is a test</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
-                <h2>This is a test</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
-                <h2>This is a test</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
-                <h2>This is a test</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
-                <h2>This is a test</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
-                <h2>This is a test</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
-                <h2>This is a test</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
-                <h2>This is a test</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
-                <h2>This is a test</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
-                <h2>This is a test</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
-                <h2>This is a test</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
-                <h2>This is a test</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipisicing elit. Excepturi culpa illum aliquid. Nihil eius consequatur tempore eum nesciunt, ullam facilis, non maxime ipsa inventore reiciendis porro iure itaque provident corrupti?</p>
-            </motion.div>
+    <>
+        <div className="homepageContainer pageContainer">
+            <Title/>
+            <Header/>
         </div>
     </>
     )
