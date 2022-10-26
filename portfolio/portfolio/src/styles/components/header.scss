@@ -1,57 +1,62 @@
-header{
-    position: absolute;
-    top: 0;
-    left: 0;
-    z-index: 1;
-
-    width: 100%;
-    box-sizing: border-box;
-
-    margin: 20px 0;
-    padding: 0 3vw;
-
+header{     
     ul.nav{
         list-style: none;
-        padding: 0;
-        margin: 0;
-    
+
         display: flex;
         flex-direction: row;
-        justify-content: flex-end;
-        gap: 50px;
+        justify-content: space-evenly;
+        padding-left: 0;
 
-        .navElement{
-            position: relative;
-            padding: 0 5px;
+        li.navElement{
+            width: 100%;
+            text-align: center;
 
-            & a{
-                color: $text_color;
-            }
-
-            &:hover a{
-                transition: all 0.8s;
-                color: $background_color;
-            }
-            &:before{
-                content:'';
-                position: absolute;
-                top: 0;
-                left:0;
-                width: 100%;
-                height: 100%;
-                color: $background_color;
-                background-color: $text_color;
-                transform: scaleX(0);
-                z-index: -1;
-                mix-blend-mode: difference;
-            }
-            &:hover:before{
-                transition: transform 0.4s;
-                transform: scaleX(1);
-                transform-origin: left;
-            }
+            display:flex;
+            gap: 20px;
+            justify-content: space-around;
+            align-items: center;
 
             
+            &:nth-child(2){
+                border-right: 1px solid black;
+                border-left: 1px solid black;
+                margin: 0 20px;
+                padding: 0 20px;
+            }
+
+
+
+            .navExtraText{
+                max-width: 50%;
+                margin: 0;
+            }
+
+            .navLink{
+                border-bottom: 2px solid transparent;
+                position: relative;
+            }
+
+            .navLink::after{
+                content:'';
+                z-index: 0;
+                position: absolute;
+                bottom: 10%;
+                left: 50%;
+                transform: translate(-50%,100%);
+            }
+
+            .navLink:hover::after{
+                background-image: url(../../assets/gear.svg);
+                width: 25px;
+                height: 25px;
+                animation: rotate 3s infinite linear;
+            }
         }
+
     }
+}
+
+@keyframes rotate{
+    0%{transform:translate(-50%,100%) rotate(0deg);}
+    100%{transform:translate(-50%,100%) rotate(360deg);}
 }

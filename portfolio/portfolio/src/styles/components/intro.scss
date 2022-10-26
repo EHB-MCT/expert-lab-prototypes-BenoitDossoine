@@ -1,0 +1,34 @@
+#introTile{
+    width: 100%;
+    display: flex;
+    gap: 20px;
+
+    #introTitleContainer{
+        display: flex;
+        flex-direction: row;
+        justify-content: center;
+        align-items: center;
+        gap: 20px;
+
+        svg{
+            height: 60px;
+            fill: #d4af37;
+        }
+    }
+
+    #introTitle,#introSubTitle{
+        text-align: center;
+    }
+
+    #introSubTitle{
+        background-color: black;
+        color: #eee;
+        margin-top: 10px;
+        margin-bottom: 10px;
+    }
+
+    img{
+        // width:100%;
+        filter: sepia(1)
+    }
+}

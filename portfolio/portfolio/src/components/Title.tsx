@@ -1,6 +1,11 @@
 function Title(){
     return(
-        <h1 id='mainTitle'>Benoit Dossoine</h1>
+        <div className="titleContainer">
+            <h1 id='mainTitle'>Benoît Dossoine</h1>
+            <div id='shortInfo'>
+                 <p>est. 1996</p>
+            </div>
+        </div>
     )
 }
 
