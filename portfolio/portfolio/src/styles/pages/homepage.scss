@@ -8,6 +8,9 @@
     min-height: 100vh;
     overflow:hidden;
     padding: 30px 20px;
+
+    display:grid;
+    grid-template-columns: repeat(12,1fr);
     
     background-image: url(../../assets/paper.png);
     background-blend-mode: multiply;

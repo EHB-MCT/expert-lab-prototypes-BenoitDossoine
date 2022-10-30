@@ -1,34 +1,59 @@
 #introTile{
-    width: 100%;
+    grid-column: 1/span 8;
+
     display: flex;
     gap: 20px;
 
-    #introTitleContainer{
-        display: flex;
-        flex-direction: row;
-        justify-content: center;
-        align-items: center;
-        gap: 20px;
+    position: relative;
 
-        svg{
-            height: 60px;
-            fill: #d4af37;
+    &::after{
+        position: absolute;
+        content:'Intro';
+        top:-10px;
+        right: 20px;
+        padding: 0 15px;
+        
+        font-family: 'Cinzel Decorative', serif;
+        font-size: 20px;
+        background-image: url(../../assets/paper.png);
+        background-blend-mode: multiply;
+        background-color: $paper_color;
+    }
+
+    #introTitleContainer{
+        background-color: black;
+        color: #eee;
+
+        margin-bottom: 10px;
+        text-align: center;
+
+    }
+
+    .introImgContainer{
+        position: relative;
+        grid-column: 1/span 5;
+        .introImg{
+            width: 100%;
+            height: auto;
+            mix-blend-mode: multiply;
+            border-radius: 4px;
+            filter: sepia(1)
         }
     }
 
+    .introTextContainer{
+        grid-column: 5/span 3;
+    }
+    
     #introTitle,#introSubTitle{
         text-align: center;
     }
-
+    
     #introSubTitle{
         background-color: black;
         color: #eee;
         margin-top: 10px;
         margin-bottom: 10px;
     }
-
-    img{
-        // width:100%;
-        filter: sepia(1)
-    }
+    
 }

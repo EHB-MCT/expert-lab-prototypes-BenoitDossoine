@@ -1,5 +1,6 @@
 import Header from './Header';
 import Title from './Title';
+import Intro from './Intro';
 
 function Homepage(){
     
@@ -8,6 +9,7 @@ function Homepage(){
         <div className="homepageContainer pageContainer">
             <Title/>
             <Header/>
+            <Intro/>
         </div>
     </>
     )
