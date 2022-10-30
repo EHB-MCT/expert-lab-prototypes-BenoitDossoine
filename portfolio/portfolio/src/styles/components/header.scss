@@ -2,9 +2,8 @@ header{
     ul.nav{
         list-style: none;
 
-        display: flex;
-        flex-direction: row;
-        justify-content: space-evenly;
+        display: grid;
+        grid-template-columns: repeat(3,1fr);
         padding-left: 0;
 
         li.navElement{
@@ -15,16 +14,11 @@ header{
             gap: 20px;
             justify-content: space-around;
             align-items: center;
-
             
             &:nth-child(2){
                 border-right: 1px solid black;
                 border-left: 1px solid black;
-                margin: 0 20px;
-                padding: 0 20px;
             }
-
-
 
             .navExtraText{
                 max-width: 50%;
