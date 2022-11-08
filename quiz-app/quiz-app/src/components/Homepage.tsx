@@ -1,12 +1,13 @@
 import HomepageButton from "./HomepageButton"
-import {useState} from "react"
-import {ArrowRight} from "react-feather"
-import {useNavigate} from "react-router-dom";
+import {useState,useEffect} from "react"
+import {ArrowRight} from "react-feather";
+import {fromEvent} from 'rxjs';
 
 function Homepage(props:any){
     const [playerState,setPlayerState] = useState(true);
     const [playerName,setPlayerName] = useState("");
 
+    
     const continueClick = ()=>{
         if(playerState){
             props.client.emit("join_game",playerName);
@@ -15,9 +16,16 @@ function Homepage(props:any){
         props.client.emit("join_master");
     }
     
+    useEffect(()=>{
+        // const nameField = document.querySelector('#nameInput') as HTMLInputElement;
+        const nameField = document.getElementById('nameInput') as HTMLInputElement;   
+        const nameObservable = fromEvent(nameField,'keyup');
+        const nameSubscription = nameObservable.subscribe(event=>setPlayerName(nameField.value));
+    },[])
+    
     return(
         <div id="homepageContainer">
-            <p className="introText">Welcome!</p>
+            <p className="introText">Welcome{playerName!=""?" "+playerName:""}!</p>
             <p>What's your name?</p>
             <input id="nameInput" type="text" placeholder="Write your name" onChange={(e)=>setPlayerName(e.target.value)} />
             <p className="introText">Choose your player status:</p>
