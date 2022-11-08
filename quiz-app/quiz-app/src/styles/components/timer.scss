@@ -1,0 +1,21 @@
+.timerContainer{
+    position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 200px;
+    svg{
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%,-50%);
+        height: 100%;
+       
+        .timerCircle{
+            height: 100%;
+            fill: transparent;
+            stroke: white;
+            stroke-width: 3;
+        }
+    }
+}

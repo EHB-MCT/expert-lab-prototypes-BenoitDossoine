@@ -1,5 +1,4 @@
-import { useNavigate } from "react-router-dom";
-
+import Question from './Question';
 function Quiz(props:any){
 
     let questions = props.gameState.questions;
@@ -17,7 +16,8 @@ function Quiz(props:any){
     function startQuiz(){
         return(
             <>
-                {showQuestion(props.gameState.questionNumber)}
+                <Question question = {questions[props.gameState.questionNumber]}></Question>
+                {/* {showQuestion(props.gameState.questionNumber)} */}
             </>
         )
     }
