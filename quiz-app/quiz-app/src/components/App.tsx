@@ -31,7 +31,6 @@ function App() {
       })
 
       client.on("start_quiz",(questions)=>{
-        console.log(questions);
         setGameState((gameState)=>{return{...gameState,playing:true,questions:questions}});
       })
 

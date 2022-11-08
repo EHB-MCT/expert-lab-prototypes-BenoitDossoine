@@ -2,7 +2,6 @@ import Question from './Question';
 function Quiz(props:any){
 
     let questions = props.gameState.questions;
-    console.log(questions);
     function waitForSecondPlayer(){
         return(
             <div className="waitDiv">
@@ -17,7 +16,6 @@ function Quiz(props:any){
         return(
             <>
                 <Question question = {questions[props.gameState.questionNumber]}></Question>
-                {/* {showQuestion(props.gameState.questionNumber)} */}
             </>
         )
     }
