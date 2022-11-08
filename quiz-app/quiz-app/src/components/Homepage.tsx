@@ -2,6 +2,7 @@ import HomepageButton from "./HomepageButton"
 import {useState,useEffect} from "react"
 import {ArrowRight} from "react-feather";
 import {fromEvent} from 'rxjs';
+import {tap} from 'rxjs/operators';
 
 function Homepage(props:any){
     const [playerState,setPlayerState] = useState(true);
@@ -20,7 +21,10 @@ function Homepage(props:any){
         // const nameField = document.querySelector('#nameInput') as HTMLInputElement;
         const nameField = document.getElementById('nameInput') as HTMLInputElement;   
         const nameObservable = fromEvent(nameField,'keyup');
-        const nameSubscription = nameObservable.subscribe(event=>setPlayerName(nameField.value));
+        const nameChange = nameObservable.pipe(
+            tap(event =>setPlayerName(nameField.value))
+        )
+        const nameSubscription = nameObservable.subscribe();
     },[])
     
     return(
