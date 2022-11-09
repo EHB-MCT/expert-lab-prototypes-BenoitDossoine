@@ -12,7 +12,7 @@ function Timer(props:any){
         const questionTimer = interval(1000);
         const endTimer = timer(props.time*1000);
         const end = questionTimer.pipe(takeUntil(endTimer.pipe(tap(()=>setTimerOn(false)))));
-        const subscribe = end.subscribe(val=>setTime(val))
+        const subscribe = end.subscribe(val=>setTime(val));
     },[])
     return(
         <div className="timerContainer">
