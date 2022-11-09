@@ -30,8 +30,9 @@ function App() {
         navigate("/quiz");
       })
 
-      client.on("start_quiz",(questions)=>{
-        setGameState((gameState)=>{return{...gameState,playing:true,questions:questions}});
+      client.on("start_quiz",(data)=>{
+        const player = data.player;
+        setGameState((gameState)=>{return{...gameState,player:player,playing:true,questions:data.questions}});
       })
 
       client.on("error",(message:String)=>alert(message));
@@ -42,12 +43,11 @@ function App() {
         setGameState((gameState)=>{return{...gameState,player:player}})
       })
 
-      client.on("nextQuestion", ()=>{
-        const newQuestionNumber = gameState.questionNumber+1;
+      client.on("nextQuestion", (questionNumber)=>{
         
         const player = gameState.player;
         player.status = "playing";
-        setGameState((gameState)=>{return{...gameState,player:player,questionNumber:newQuestionNumber}})
+        setGameState((gameState)=>{return{...gameState,player:player,questionNumber:questionNumber}})
       })
 
       client.on("master_joined",()=>{
@@ -62,7 +62,7 @@ function App() {
 
     })
 
-  },[])
+  },[gameState])
 
   return (
     <Routes>

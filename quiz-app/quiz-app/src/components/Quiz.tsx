@@ -15,52 +15,15 @@ function Quiz(props:any){
     function startQuiz(){
         return(
             <>
-                <Question question = {questions[props.gameState.questionNumber]}></Question>
+                <Question question = {questions[props.gameState.questionNumber]} handleAnswer={handleAnswer}></Question>
             </>
         )
     }
 
-    function showQuestion(questionNumber:number){
-        
-        let allAnswers = [questions[questionNumber]["correct_answer"],...questions[questionNumber]["incorrect_answers"]];
-        let shuffledAnswers = allAnswers.sort(()=>Math.random()-0.5);
-        return(
-            <div className="questionContainer">
-                {props.gameState.player.status==="answered"?
-                        <div>
-                            <p>Waiting for the other player to answer...</p>
-                        </div>
-                    :<>
-                        <p className="question">{questions[questionNumber].question}</p>
-                        <div className="answers">
-                            {shuffledAnswers.map((answer:string,index:number)=>{
-                                return(
-                                    <button
-                                    className="answer"
-                                    key={index}
-                                    disabled={props.gameState.player.status==="answered"}
-                                    onClick={()=>{
-                                        checkAnswer(questionNumber,answer);
-                                        props.gameState.questionNumber===questions.length-1?endGame():props.gameState.questionNumber++;
-                                    }}>
-                                    {answer}
-                                    </button>
-                                    )
-                                })
-                            }
-                        </div>
-                    </>
-            }</div>
-        )
+    function handleAnswer(right:Boolean){
+        props.client.emit("answer",{id:props.client.id,correct:right});
     }
-
-    function checkAnswer(questionNumber:number,answer:String){
-        if(answer===questions[questionNumber].rightAnswer){
-            props.client.emit("answer",{id:props.client.id,correct:true});
-        } else {
-            props.client.emit("answer",{id:props.client.id,correct:false});
-        }
-    }
+  
 
     function endGame(){
         props.client.emit("end_player");

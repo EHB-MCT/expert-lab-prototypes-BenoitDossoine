@@ -1,12 +1,33 @@
-
+import {useEffect,useState} from 'react';
+import {fromEvent} from 'rxjs'
+import {pluck,tap} from 'rxjs/operators';
 import Timer from './Timer';
 
 function Question(props:any){
     const question = props.question;
+    
     let allAnswers = [question["correct_answer"],...question["incorrect_answers"]];
     let shuffledAnswers = allAnswers.sort(()=>Math.random()-0.5);
 
-    
+    useEffect(()=>{
+        let buttons = document.getElementsByClassName('answer');
+        const source = fromEvent(buttons,'click');
+        const values = source.pipe(
+            pluck('target'),
+            pluck('dataset'),
+            pluck('answer'),
+            tap(answer=>checkAnswer(answer as String))
+        )
+        const subscribe = values.subscribe();
+    },[question])
+
+    function checkAnswer(answer:String){
+        if(answer===question["correct_answer"]){
+            props.handleAnswer(true)
+        } else {
+            props.handleAnswer(false)
+        }
+    }
 
     return(
         <div className="questionContainer">
@@ -16,15 +37,11 @@ function Question(props:any){
                             {shuffledAnswers.map((answer:string,index:number)=>{
                                 return(
                                     <button
+                                    data-answer={answer}
                                     className="answer"
                                     key={index}
-                                    // disabled={props.gameState.player.status==="answered"}
-                                    // onClick={()=>{
-                                    //     checkAnswer(questionNumber,answer);
-                                    //     props.gameState.questionNumber===questions.length-1?endGame():props.gameState.questionNumber++;
-                                    // }}
                                     >
-                                    {answer}
+                                        {answer}
                                     </button>
                                     )
                                 })

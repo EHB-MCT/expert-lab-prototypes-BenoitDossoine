@@ -13,17 +13,8 @@ const gameState = {
     status : false,
     master: {},
     players : [],
-    questions: [
-        {
-            "question": "What is my name?",
-            "rightAnswer": "Benoît",
-            "wrongAnswers": ["Finn","Ilyes"]
-        },{
-            "question": "Which animal is green?",
-            "rightAnswer": "Frog",
-            "wrongAnswers": ["Cow","Dog"]
-        }
-    ],
+    questions: [],
+    questionNumber: 0,
 }
 
 io.on('connection', (socket)=>{
@@ -39,24 +30,25 @@ io.on('connection', (socket)=>{
             if(gameState.players.length == 2){
                 gameState.status = true;
                 setPlayerStatus("playing");
-                io.emit("start_quiz",gameState.questions);
+                for(player of gameState.players){
+                    io.to(player.id).emit("start_quiz",{questions:gameState.questions,player:player});
+                }
             }
         } else {
-            io.to(playerId).emit("error","Too much players in this room!")
+            io.to(socket.id).emit("error","Too much players in this room!")
         }
     })
 
     socket.on("answer",(data)=>{
         gameState.players.find(player => player.id === data.id).status="answered";
-
         if(data.correct){
             gameState.players.find(player => player.id === data.id).score++;
         }
         
         if(gameState.players.every(player=>player.status==="answered")){
             setPlayerStatus("playing");
-            io.emit("nextQuestion");
-
+            gameState.questionNumber++;
+            io.emit("nextQuestion",gameState.questionNumber);
         } else {
             io.to(socket.id).emit("answer");
         }
@@ -79,7 +71,6 @@ io.on('connection', (socket)=>{
             .then((response)=> response.json())
             .then(data => data.results);
         gameState.questions = questions;
-        console.log(gameState.questions);     
     })
 
     /**
