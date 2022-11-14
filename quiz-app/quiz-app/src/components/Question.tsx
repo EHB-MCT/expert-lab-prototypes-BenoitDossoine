@@ -19,6 +19,9 @@ function Question(props:any){
             tap(answer=>checkAnswer(answer as String))
         )
         const subscribe = values.subscribe();
+        return()=>{
+            subscribe.unsubscribe();
+        }
     },[question])
 
     function checkAnswer(answer:String){
