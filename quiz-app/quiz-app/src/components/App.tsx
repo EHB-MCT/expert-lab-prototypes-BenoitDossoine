@@ -25,6 +25,7 @@ function App() {
 
   useEffect(()=>{
     client.on("connect",()=>{
+      navigate("/");
       client.on("player_joined",(player:any)=>{
         setGameState((gameState)=>{return{...gameState,player:player}});
         navigate("/quiz");
