@@ -63,6 +63,13 @@ io.on('connection', (socket)=>{
         }
     })
 
+    socket.on("timeup",()=>{
+        console.log("timeup");
+        setPlayerStatus("playing");
+        gameState.questionNumber++;
+        io.emit("nextQuestion",gameState.questionNumber);
+    })
+
     /**
      * Quiz master logic
      */
@@ -80,7 +87,6 @@ io.on('connection', (socket)=>{
             .then((response)=> response.json())
             .then(data => data.results);
         gameState.questions = questions;
-
         if(gameState.players.length == 2){
             gameState.status = true;
             setPlayerStatus("playing");

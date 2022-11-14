@@ -32,9 +32,13 @@ function Question(props:any){
         }
     }
 
+    function timeUp(){
+        props.handleAnswer(false);
+    }
+
     return(
         <div className="questionContainer">
-                        <Timer time={30} question={props.question}></Timer>
+                        <Timer time={30} question={props.question} timeUp={timeUp}></Timer>
                         <p className="question">{question.question}</p>
                         <div className="answers">
                             {shuffledAnswers.map((answer:string,index:number)=>{
