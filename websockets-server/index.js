@@ -55,7 +55,6 @@ io.on('connection', (socket)=>{
             else
             {
                 setPlayerStatus("playing");
-                console.log(gameState.players);
                 gameState.questionNumber++;
                 io.emit("nextQuestion",gameState.questionNumber);
             }
