@@ -31,7 +31,7 @@ function Question(props:any){
 
     return(
         <div className="questionContainer">
-                        <Timer time={30}></Timer>
+                        <Timer time={30} question={props.question}></Timer>
                         <p className="question">{question.question}</p>
                         <div className="answers">
                             {shuffledAnswers.map((answer:string,index:number)=>{

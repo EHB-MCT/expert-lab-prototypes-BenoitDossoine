@@ -13,7 +13,11 @@ function Timer(props:any){
         const endTimer = timer(props.time*1000);
         const end = questionTimer.pipe(takeUntil(endTimer.pipe(tap(()=>setTimerOn(false)))));
         const subscribe = end.subscribe(val=>setTime(val));
-    },[])
+
+        return()=>{
+            subscribe.unsubscribe();
+        }
+    },[props.question])
     return(
         <div className="timerContainer">
             <svg>
