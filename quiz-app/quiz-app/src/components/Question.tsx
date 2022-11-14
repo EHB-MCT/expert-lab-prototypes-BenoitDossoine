@@ -5,7 +5,6 @@ import Timer from './Timer';
 
 function Question(props:any){
     const question = props.question;
-    
     let allAnswers = [question["correct_answer"],...question["incorrect_answers"]];
     let shuffledAnswers = allAnswers.sort(()=>Math.random()-0.5);
 
@@ -38,22 +37,28 @@ function Question(props:any){
 
     return(
         <div className="questionContainer">
-                        <Timer time={30} question={props.question} timeUp={timeUp}></Timer>
-                        <p className="question">{question.question}</p>
-                        <div className="answers">
-                            {shuffledAnswers.map((answer:string,index:number)=>{
-                                return(
-                                    <button
-                                    data-answer={answer}
-                                    className="answer"
-                                    key={index}
-                                    >
-                                        {answer}
+                    <Timer time={30} question={props.question} timeUp={timeUp}></Timer>
+                    <p className="question">{question.question}</p>
+                    <div className="answers">
+                        {
+                            props.status=="answered"?
+                            <p>Waiting for the other player to answer...</p>:
+                            <>
+                                {shuffledAnswers.map((answer:string,index:number)=>{
+                                    return(
+                                        <button
+                                            data-answer={answer}
+                                            className="answer"
+                                            key={index}
+                                            >
+                                                {answer}
                                     </button>
                                     )
                                 })
-                            }
-                        </div>
+                                }
+                            </>
+                        }
+                    </div>
             </div>
     )
 }
