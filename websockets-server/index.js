@@ -9,7 +9,15 @@ const io = require("socket.io")(port,{
     cors: "*"
 });
 
-const gameState = {
+const initialGameState = {
+    status : false,
+    master: {},
+    players : [],
+    questions: [],
+    questionNumber: 0,
+}
+
+let gameState = {
     status : false,
     master: {},
     players : [],
@@ -47,11 +55,14 @@ io.on('connection', (socket)=>{
         }
         
         if(gameState.players.every(player=>player.status==="answered")){
+            // end of game logic
             if(gameState.questionNumber==gameState.questions.length-1){
                 setPlayerStatus("finished");
                 io.emit("end_game",gameState.players);
+                gameState = {...initialGameState};
                 gameState.players = [];
             }
+            //ongoing game logic
             else
             {
                 setPlayerStatus("playing");
@@ -63,12 +74,6 @@ io.on('connection', (socket)=>{
         }
     })
 
-    socket.on("timeup",()=>{
-        console.log("timeup");
-        setPlayerStatus("playing");
-        gameState.questionNumber++;
-        io.emit("nextQuestion",gameState.questionNumber);
-    })
 
     /**
      * Quiz master logic
@@ -95,19 +100,6 @@ io.on('connection', (socket)=>{
             }
         }
     })
-
-    /**
-     * End of game logic
-     */
-    socket.on("end_player",()=>{
-        gameState.players.find(player => player.id === socket.id).status="finished";
-        if(gameState.players.every(player=>player.status==="finished")){
-            io.emit("end_game",gameState.players);
-            gameState.players = [];
-        }
-    })
-
-
 
     socket.on('disconnect',()=>{
         if(gameState.players.find(player=>player.id === socket.id)){
