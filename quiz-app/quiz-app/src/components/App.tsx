@@ -31,8 +31,7 @@ function App() {
       })
 
       client.on("start_quiz",(data)=>{
-        const player = data.player;
-        setGameState((gameState)=>{return{...gameState,player:player,playing:true,questions:data.questions}});
+        setGameState((gameState)=>{return{...gameState,player:data.player,playing:true,questions:data.questions}});
       })
 
       client.on("error",(message:String)=>alert(message));
@@ -44,7 +43,6 @@ function App() {
       })
 
       client.on("nextQuestion", (questionNumber)=>{
-        
         const player = gameState.player;
         player.status = "playing";
         setGameState((gameState)=>{return{...gameState,player:player,questionNumber:questionNumber}})

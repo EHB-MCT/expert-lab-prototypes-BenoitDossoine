@@ -18,6 +18,7 @@ const gameState = {
 }
 
 io.on('connection', (socket)=>{
+    io.to(socket.id).emit("new_connection");
     /**
      * Player logic
      */
@@ -27,7 +28,7 @@ io.on('connection', (socket)=>{
             gameState.players.push(newPlayer);
             io.to(socket.id).emit("player_joined",newPlayer)
 
-            if(gameState.players.length == 2){
+            if(gameState.players.length == 2 && gameState.questions.length>0){
                 gameState.status = true;
                 setPlayerStatus("playing");
                 for(player of gameState.players){
@@ -46,9 +47,18 @@ io.on('connection', (socket)=>{
         }
         
         if(gameState.players.every(player=>player.status==="answered")){
-            setPlayerStatus("playing");
-            gameState.questionNumber++;
-            io.emit("nextQuestion",gameState.questionNumber);
+            if(gameState.questionNumber==gameState.questions.length-1){
+                setPlayerStatus("finished");
+                io.emit("end_game",gameState.players);
+                gameState.players = [];
+            }
+            else
+            {
+                setPlayerStatus("playing");
+                console.log(gameState.players);
+                gameState.questionNumber++;
+                io.emit("nextQuestion",gameState.questionNumber);
+            }
         } else {
             io.to(socket.id).emit("answer");
         }
@@ -71,6 +81,14 @@ io.on('connection', (socket)=>{
             .then((response)=> response.json())
             .then(data => data.results);
         gameState.questions = questions;
+
+        if(gameState.players.length == 2){
+            gameState.status = true;
+            setPlayerStatus("playing");
+            for(player of gameState.players){
+                io.to(player.id).emit("start_quiz",{questions:gameState.questions,player:player});
+            }
+        }
     })
 
     /**
