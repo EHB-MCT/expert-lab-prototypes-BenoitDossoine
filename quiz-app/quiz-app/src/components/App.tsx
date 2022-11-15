@@ -1,11 +1,12 @@
 import {useEffect,useState} from 'react';
 import {Routes, Route, useNavigate} from "react-router-dom"
-import Homepage from './Homepage'
-import Masterpage from "./Masterpage";
-import { socketsService } from '../services/SocketsService';
-
 import {io} from "socket.io-client";
+import { of, fromEvent } from 'rxjs';
+import { map, switchMap, tap } from 'rxjs/operators';
+
 import GameState from '../interfaces/GameState';
+import Homepage from './Homepage';
+import Masterpage from './Masterpage';
 import Quiz from './Quiz';
 import Scorepage from './Scorepage';
 import Player from '../interfaces/Player';
@@ -26,10 +27,22 @@ function App() {
   useEffect(()=>{
     client.on("connect",()=>{
       navigate("/");
-      client.on("player_joined",(player:any)=>{
-        setGameState((gameState)=>{return{...gameState,player:player}});
-        navigate("/quiz");
-      })
+
+      const connection = fromEvent(client,'player_joined')
+        .pipe(
+          tap(player => {
+            setGameState((gameState)=>{
+              return{...gameState,player:player}
+            });
+            navigate("/quiz");
+          })
+        )
+      connection.subscribe();
+        
+      // client.on("player_joined",(player:any)=>{
+      //   setGameState((gameState)=>{return{...gameState,player:player}});
+      //   navigate("/quiz");
+      // })
 
       client.on("start_quiz",(data)=>{
         setGameState((gameState)=>{return{...gameState,player:data.player,playing:true,questions:data.questions}});
