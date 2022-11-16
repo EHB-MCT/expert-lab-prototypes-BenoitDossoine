@@ -1,7 +1,7 @@
 const express = require('express');
 const http = require('http');
 
-const {fromEvent,combineLatest,of, from} = require('rxjs');
+const {fromEvent,combineLatest,of, from,} = require('rxjs');
 const {tap,switchMap,map, mergeMap,takeUntil,skipWhile,buffer} = require('rxjs/operators');
 const { connection } = require('websocket');
 
@@ -38,7 +38,7 @@ const connection$ = io$
                 )      
         )
     )
-connection$.subscribe(({io,client})=>{console.log('connected: ',client.id)});
+connection$.subscribe();
 
 const disconnection$ = connection$
     .pipe(
@@ -48,11 +48,9 @@ const disconnection$ = connection$
                     map(()=>({client}))
                 )
         )
-    )
+    );
 
-    //subject bijhouden
 disconnection$.subscribe(({client})=>{
-
     if(gameState.players.find(player=>player.id === client.id)){
         let index = gameState.players.indexOf(gameState.players.find(player=>player.id === client.id));
         gameState.players.splice(index,1);
@@ -82,28 +80,25 @@ listenToEvent('join_master')
         }
     })
 
-listenToEvent('questions_submitted')
-    .pipe(
-        tap(async ({io,client,data})=>{
-            let questions = await fetch(`https://opentdb.com/api.php?amount=${data.numberOfQuestions}&category=${data.categories}&difficulty=${data.difficulty}&type=multiple`)
-                .then((response)=> response.json())
-                .then(data => data.results);
-            gameState.questions = questions;
-            console.log(gameState.questions);
-            }
-        )
-
-    )
-    .subscribe(()=>console.log("questionsfilled"))
-
-// const questionsFilled = of('')
-
+listenToEvent('questions_submitted').subscribe();
+    
 combineLatest([
     listenToEvent('join_game').pipe(skipWhile(()=>gameState.players.length<2)),
-    listenToEvent('questions_submitted')])
+    listenToEvent('questions_submitted')
+        .pipe(
+            switchMap(({io,client,data})=>from(fetch(`https://opentdb.com/api.php?amount=${data.numberOfQuestions}&category=${data.categories}&difficulty=${data.difficulty}&type=multiple`))
+                .pipe(
+                    switchMap(response => from(response.json())
+                        .pipe(
+                            tap(questions=>gameState.questions = questions.results)
+                        )
+                    )
+                )
+            )
+        )
+    ])
     .subscribe(()=>
         {
-            console.log("combinelatest", gameState.questions);
             startGame()
         }
     )
