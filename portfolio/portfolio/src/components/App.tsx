@@ -1,5 +1,6 @@
 import {useEffect, useState} from 'react';
 import Loader from './Loader';
+import HomePage from './HomePage';
 import {AnimatePresence} from "framer-motion";
 function App() {
   const [loading,setLoading] = useState(false);
@@ -12,9 +13,7 @@ function App() {
   },[])
   return (
     <div className="App">
-      <AnimatePresence>
-        {loading?<Loader key="loader"></Loader>:<p>Content!</p>}
-      </AnimatePresence>
+      <HomePage></HomePage>
     </div>
   );
 }
