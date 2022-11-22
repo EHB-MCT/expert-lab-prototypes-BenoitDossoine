@@ -39,14 +39,14 @@ function HomePage(){
             }}>
                 <Projects projects={projects}></Projects>
             </Canvas>
-            <div className="homepage section2">
-                <p>Time to unlock your imagination!</p>
+            <div className="homepage landingpage">
+                <h1>Time to unlock your imagination</h1>
             </div>
             <div className="homepage section3">
-                <p>Time to unlock your imagination!</p>
+                {/* <p>Time to unlock your imagination!</p> */}
             </div>
             <div className="homepage section4">
-                <p>Time to unlock your imagination!</p>
+                {/* <p>Time to unlock your imagination!</p> */}
             </div>
         </>
     )

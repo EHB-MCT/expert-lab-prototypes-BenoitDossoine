@@ -1,6 +1,9 @@
-import {useFrame, useLoader} from '@react-three/fiber';
+import {useRef, useLayoutEffect} from 'react';
+
+import {useLoader} from '@react-three/fiber';
+import { Text3D, Center } from '@react-three/drei';
 import * as THREE from 'three';
-import {useRef, useLayoutEffect, useEffect} from 'react';
+
 import {gsap} from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 
@@ -16,11 +19,11 @@ function Projects(props:any){
     useLayoutEffect(()=>{
         gsap.to(groupRef.current.position,{
             scrollTrigger:{
-                trigger:".section2",
-                start: "60% center",
+                trigger:".landingpage",
+                start: "75% center",
                 end: "bottom bottom",
                 scrub: 3,
-                toggleActions: "none none none reset",
+                toggleActions: "none none reset reset",
                 markers:true,
             },
             y:0,
@@ -32,8 +35,8 @@ function Projects(props:any){
                 start: "top center",
                 end:"80% center",
                 scrub: 3,
-                toggleActions: "none none none reset",
-                markers:true,
+                // toggleActions: "none none none reset",
+                // markers:true,
             }
         })
         .to(groupRef.current.rotation,{
@@ -51,7 +54,7 @@ function Projects(props:any){
                 end: "bottom bottom",
                 scrub: 3,
                 toggleActions: "none none none reset",
-                markers:true,
+                // markers:true,
             },
             x:-40,
             duration: 10
@@ -89,6 +92,16 @@ function Projects(props:any){
                                 side={THREE.DoubleSide}
                             />
                         </mesh>
+                            <Text3D
+                            font="./fonts/raleway_light.json"
+                            size={0.1}
+                            height={ 0 }
+                            curveSegments={ 12 }
+                            position={[-0.75,-0.9,0]}
+                            >
+                                Hello
+                            </Text3D>
+                        
                     </group>
                     )
                 })
