@@ -1,7 +1,7 @@
 import {useRef, useLayoutEffect} from 'react';
 
 import {useLoader} from '@react-three/fiber';
-import { Text3D, Center } from '@react-three/drei';
+import { Text3D, Float } from '@react-three/drei';
 import * as THREE from 'three';
 
 import {gsap} from 'gsap';
@@ -13,10 +13,10 @@ gsap.registerPlugin(ScrollTrigger);
 
 
 function Projects(props:any){
-    const texture = useLoader(THREE.TextureLoader,img);
+    const texture = useLoader(THREE.TextureLoader,"http://localhost:1337/uploads/LVLS_90a759461d.png");
     const groupRef = useRef() as any;
-    const timeline = useRef() as any;
     useLayoutEffect(()=>{
+        console.log(props.projects);
         gsap.to(groupRef.current.position,{
             scrollTrigger:{
                 trigger:".landingpage",
@@ -80,11 +80,14 @@ function Projects(props:any){
                         position={[3*Math.sin(index*Math.PI/3),-index,3*Math.cos(index*Math.PI/3)]}
                     >   
                         {/* <ProjectParticles/> */}
+                        <Float
+                            floatIntensity={1.5}    
+                        >
                         <mesh 
-                            scale={[1.5,1.5,1]}
+                            scale={[2.6,1.5,1]}
                             onClick={paneClickHandler}
                             onPointerOver={paneHoverHandler}
-                        >
+                            >
                             <planeGeometry></planeGeometry>
                             <meshBasicMaterial
                                 attach="material"
@@ -95,13 +98,14 @@ function Projects(props:any){
                             <Text3D
                             font="./fonts/raleway_light.json"
                             size={0.1}
-                            height={ 0 }
+                            height={ 0.01 }
                             curveSegments={ 12 }
-                            position={[-0.75,-0.9,0]}
+                            position={[-1.3,-0.9,0]}
                             >
-                                Hello
+                                {project.attributes.name}
                             </Text3D>
                         
+                        </Float>
                     </group>
                     )
                 })
