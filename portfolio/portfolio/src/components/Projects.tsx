@@ -1,22 +1,20 @@
 import {useRef, useLayoutEffect} from 'react';
 
-import {useLoader} from '@react-three/fiber';
 import { Text3D, Float } from '@react-three/drei';
 import * as THREE from 'three';
 
 import {gsap} from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import ProjectTile from './ProjectTile';
 
-import img from '../assets/timer.jpg';
 
 gsap.registerPlugin(ScrollTrigger);
 
 
 function Projects(props:any){
-    const texture = useLoader(THREE.TextureLoader,"http://localhost:1337/uploads/LVLS_90a759461d.png");
+    
     const groupRef = useRef() as any;
     useLayoutEffect(()=>{
-        console.log(props.projects);
         gsap.to(groupRef.current.position,{
             scrollTrigger:{
                 trigger:".landingpage",
@@ -62,54 +60,17 @@ function Projects(props:any){
                 
     },[])
 
-    const paneClickHandler = () => {
-        console.log("clicked!");
-    }
 
-    const paneHoverHandler = (event:any) => {
-        console.log(event.object);
-    }
-    
+
     return(
         <group ref={groupRef} position={[0,-100,0]}>
-            {props.projects.map((project:any,index:any)=>{
-                return(
-                    <group
-                        key={index}
-                        rotation={[0,index*Math.PI/3,0]}
-                        position={[3*Math.sin(index*Math.PI/3),-index,3*Math.cos(index*Math.PI/3)]}
-                    >   
-                        {/* <ProjectParticles/> */}
-                        <Float
-                            floatIntensity={1.5}    
-                        >
-                        <mesh 
-                            scale={[2.6,1.5,1]}
-                            onClick={paneClickHandler}
-                            onPointerOver={paneHoverHandler}
-                            >
-                            <planeGeometry></planeGeometry>
-                            <meshBasicMaterial
-                                attach="material"
-                                map={texture}
-                                side={THREE.DoubleSide}
-                            />
-                        </mesh>
-                            <Text3D
-                            font="./fonts/raleway_light.json"
-                            size={0.1}
-                            height={ 0.01 }
-                            curveSegments={ 12 }
-                            position={[-1.3,-0.9,0]}
-                            >
-                                {project.attributes.name}
-                            </Text3D>
-                        
-                        </Float>
-                    </group>
-                    )
-                })
-            }
+            {props.projects.map(
+                (project:any,index:any)=>{
+                    return(
+                        <ProjectTile key={index} index={index} project={project}/>
+                    );
+                }
+            )}
         </group>
                     
     )

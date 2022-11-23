@@ -18,7 +18,7 @@ function HomePage(){
             .then(response=>{
                 setProjects(response);
             })
-    },[projects])
+    },[])
 
     const starRef = useRef() as any;
     useLayoutEffect(()=>{
