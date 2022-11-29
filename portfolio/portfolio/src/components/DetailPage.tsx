@@ -1,0 +1,47 @@
+import {useEffect,useState} from "react";
+import {useParams} from "react-router-dom";
+import Project from "../interfaces/ProjectInterface";
+import { projectService } from "../services/ProjectService";
+import { FaGithub, FaGlobeAmericas } from "react-icons/fa";
+
+
+function DetailPage(props:any){
+    const parameters = useParams();
+    let [project,setProject] = useState<Project | null>(null);
+    let [loading,setLoading] = useState(false);
+    useEffect(()=>{
+        setLoading(true);
+        if(parameters.id){
+            projectService.fetchProjectById(parseInt(parameters.id))
+            .then(response=>{
+                setProject(response);
+                setLoading(false);
+            })
+        }
+    },[parameters.id])
+    return(
+        <div className="detailPage">
+            <div className="detailTextContainer detailDiv">
+                <h1>{project?.attributes?.name}</h1>
+                <p className="detailText">{project?.attributes.description}</p>
+
+                <div className="detailLinksContainer">
+                    <p className="detailLink">
+                        <FaGlobeAmericas/>
+                        <a href={project?.attributes.link}>View this project</a>
+                    </p>
+                    <p className="detailLink">
+                        <FaGithub/>
+                        <a href={project?.attributes.repository}>Check out the code</a>
+                    </p>
+                </div>
+            </div>
+            <div className="detailMediaContainer detailDiv">
+                <img src={`http://localhost:1337${project?.attributes.thumbnail.data.attributes.url}`} alt="" />
+            </div>
+        </div>
+
+    )
+}
+
+export default DetailPage;

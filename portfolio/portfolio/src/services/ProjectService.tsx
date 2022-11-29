@@ -3,10 +3,18 @@ class ProjectService {
 
     public async fetchProjects()
     {
-        const categories = await fetch(`${this.baseUrl}projects?populate=*`)
+        const projects = await fetch(`${this.baseUrl}projects?populate=*`)
             .then(response=>response.json())
-            .then(data=>data.data)
-        return categories;
+            .then(data=>data.data);
+        return projects;
+    }
+
+    public async fetchProjectById(id:Number)
+    {
+        const project = await fetch(`${this.baseUrl}projects/${id}?populate=*`)
+            .then(response=>response.json())
+            .then(data=>data.data);
+        return project;
     }
 }
 

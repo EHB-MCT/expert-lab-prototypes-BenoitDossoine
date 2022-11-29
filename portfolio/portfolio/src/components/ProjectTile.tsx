@@ -7,10 +7,10 @@ import { useNavigate } from 'react-router-dom';
 
 
 function ProjectTile(props:any){
-    
+    const navigate = useNavigate();
     const texture = useLoader(THREE.TextureLoader,`http://localhost:1337${props.project.attributes.thumbnail.data.attributes.url}`);
-    const paneClickHandler = () => {
-        console.log("clicked!");
+    const paneClickHandler = (event:any) => {
+        navigate(`/project/${props.project.id}`);
     }
     return(
         <group

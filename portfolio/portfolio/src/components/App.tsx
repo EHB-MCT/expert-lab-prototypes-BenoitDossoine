@@ -1,10 +1,10 @@
 import {useEffect, useState} from 'react';
-import Loader from './Loader';
+import {BrowserRouter, Routes, Route} from 'react-router-dom';
 import HomePage from './HomePage';
-import {AnimatePresence} from "framer-motion";
+import DetailPage from './DetailPage';
+
 function App() {
   const [loading,setLoading] = useState(false);
-  
   useEffect(()=>{
     setLoading(true);
     setTimeout(()=>{
@@ -13,7 +13,10 @@ function App() {
   },[])
   return (
     <div className="App">
-      <HomePage></HomePage>
+      <Routes>
+        <Route path="/" element={<HomePage/>}></Route>
+        <Route path="/project/:id" element={<DetailPage/>}></Route>
+      </Routes>
     </div>
   );
 }
