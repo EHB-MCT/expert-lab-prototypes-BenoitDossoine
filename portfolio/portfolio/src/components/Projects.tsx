@@ -1,15 +1,17 @@
-import {useRef, useLayoutEffect} from 'react';
+import {useRef, useLayoutEffect, useState, useEffect} from 'react';
 
 import {gsap} from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ProjectTile from './ProjectTile';
-
+import {globalService} from '../services/GlobalService';
 
 gsap.registerPlugin(ScrollTrigger);
 
 
 function Projects(props:any){
     const groupRef = useRef() as any;
+    const [groupPosition,setGroupPosition] = useState(globalService.helixPosition);
+    const [groupRotation,setGroupRotation] = useState(globalService.helixRotation);
     useLayoutEffect(()=>{
         gsap.to(groupRef.current.position,{
             scrollTrigger:{
@@ -47,17 +49,20 @@ function Projects(props:any){
             x:-40,
             duration: 10
         })
-                
+        console.log(groupRef);        
     },[props.projects])
 
-
-
+    const leavePage = () => {
+        globalService.helixPosition = groupRef.current.position;
+        globalService.helixRotation = groupRef.current.rotation;
+    }
+    
     return(
-        <group ref={groupRef} position={[0,-100,0]}>
+        <group ref={groupRef} position={[groupPosition.x,groupPosition.y,groupPosition.x]} rotation={[groupRotation.x,groupRotation.y,groupRotation.x]}>
             {props.projects.map(
                 (project:any,index:any)=>{
                     return(
-                        <ProjectTile key={index} index={index} project={project}/>
+                        <ProjectTile key={index} index={index} project={project} clickHandler={leavePage}/>
                     );
                 }
             )}

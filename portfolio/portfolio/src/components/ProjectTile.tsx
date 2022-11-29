@@ -10,6 +10,7 @@ function ProjectTile(props:any){
     const navigate = useNavigate();
     const texture = useLoader(THREE.TextureLoader,`http://localhost:1337${props.project.attributes.thumbnail.data.attributes.url}`);
     const paneClickHandler = (event:any) => {
+        props.clickHandler();
         navigate(`/project/${props.project.id}`);
     }
     return(

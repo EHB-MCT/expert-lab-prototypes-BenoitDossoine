@@ -1,11 +1,12 @@
 import {useEffect,useState} from "react";
-import {useParams} from "react-router-dom";
+import {useNavigate, useParams} from "react-router-dom";
 import Project from "../interfaces/ProjectInterface";
 import { projectService } from "../services/ProjectService";
-import { FaGithub, FaGlobeAmericas } from "react-icons/fa";
+import { FaGithub, FaGlobeAmericas, FaArrowLeft } from "react-icons/fa";
 
 
 function DetailPage(props:any){
+    const navigate = useNavigate();
     const parameters = useParams();
     let [project,setProject] = useState<Project | null>(null);
     let [loading,setLoading] = useState(false);
@@ -19,8 +20,14 @@ function DetailPage(props:any){
             })
         }
     },[parameters.id])
+
+    const backToHome = ()=>{
+        navigate(-1);
+    }
+    
     return(
         <div className="detailPage">
+            <FaArrowLeft className="backArrow" onClick={()=>backToHome()}/>
             <div className="detailTextContainer detailDiv">
                 <h1>{project?.attributes?.name}</h1>
                 <p className="detailText">{project?.attributes.description}</p>

@@ -10,6 +10,12 @@
     flex-direction: row;
     justify-content: flex-start;
 
+    position:relative;
+    .backArrow{
+        position: absolute;
+        top: 7%;
+    }
+
     .detailDiv{
         width: 45%;
         box-sizing: border-box;
