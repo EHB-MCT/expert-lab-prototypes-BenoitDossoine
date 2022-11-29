@@ -3,7 +3,7 @@ class ProjectService {
 
     public async fetchProjects()
     {
-        const categories = await fetch(`${this.baseUrl}projects?populate=thumbnail`)
+        const categories = await fetch(`${this.baseUrl}projects?populate=*`)
             .then(response=>response.json())
             .then(data=>data.data)
         return categories;

@@ -12,30 +12,52 @@ import { projectService } from '../services/ProjectService';
 gsap.registerPlugin(ScrollTrigger);
 
 function HomePage(){
+    const [loading,setLoading] = useState(true);
+    const [consent,setConsent] = useState(false);
     const [projects,setProjects] = useState([]);
     useEffect(()=>{
+        setLoading(true);
         projectService.fetchProjects()
             .then(response=>{
                 setProjects(response);
+                setLoading(false);
             })
+            
     },[])
 
     const starRef = useRef() as any;
     useLayoutEffect(()=>{
-        gsap.to(starRef.current,{
-            scrollTrigger:{
-                trigger:".landingpage",
-                start: "75% center",
-                end: "bottom bottom",
-                scrub: true,
-                toggleActions: "none none reset reset",
-                markers:true,
-            },
-            visible:true,
-            duration: 1
-        })
-    },[])
+        if(consent){
+            // gsap.to(starRef.current,{
+            //     scrollTrigger:{
+            //         trigger:".landingpage",
+            //         start: "75% center",
+            //         end: "bottom bottom",
+            //         scrub: 1,
+            //         toggleActions: "none none reset reset",
+            //         // markers:true,
+            //     },
+            //     visible:true,
+            //     duration: 1
+            // })
+        }
+    },[consent])
     return(
+    <>
+        {!consent?
+            <div className="loadingPage">
+                <p className="loadingPageText">This experience is beter with sound!</p>
+                {loading?
+                    <p className="loadingPageText">Loading....</p>
+                :
+                    <button 
+                        className="loadingPageBtn"
+                        onClick={()=>{setConsent(true)}}>
+                            Enter
+                    </button>
+                }
+            </div>
+        :
         <>
             <Canvas style={{
                 width: "100vw",
@@ -43,8 +65,8 @@ function HomePage(){
                 zIndex: 50,
                 position: "fixed"
             }}>
-                <group ref={starRef} visible={false}>
-                    <Stars radius={100} depth={50} count={5000} factor={10} saturation={1} fade speed={1.5}></Stars>
+                <group ref={starRef} visible={true}>
+                    <Stars radius={70} depth={50} count={3000} factor={10} saturation={1} fade speed={1.5}></Stars>
                 </group>
                 <Projects projects={projects}></Projects>
             </Canvas>
@@ -58,6 +80,8 @@ function HomePage(){
                 {/* <p>Time to unlock your imagination!</p> */}
             </div>
         </>
+        }
+    </>
     )
 }
 

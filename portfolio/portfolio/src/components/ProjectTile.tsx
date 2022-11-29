@@ -1,7 +1,10 @@
-import {useEffect} from 'react';
 import * as THREE from 'three';
 import {useLoader} from '@react-three/fiber';
 import { Text3D, Float } from '@react-three/drei';
+
+import PositionalAudio from './PositionalAudio';
+import { useNavigate } from 'react-router-dom';
+
 
 function ProjectTile(props:any){
     
@@ -38,8 +41,14 @@ function ProjectTile(props:any){
                 >
                     {props.project.attributes.name}
                 </Text3D>
-            
+            {props.project.attributes.soundtrack.data?
+                <PositionalAudio
+                    url={`http://localhost:1337${props.project.attributes.soundtrack.data.attributes.url}`}
+                />
+                : null
+            }
             </Float>
+            
         </group>
     )
 }
