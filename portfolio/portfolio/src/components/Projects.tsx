@@ -38,18 +38,18 @@ function Projects(props:any){
         .to(groupRef.current.position,{
             y:props.projects.length-1,
         },"<")
-        gsap.to(groupRef.current.position,{
+        gsap.timeline({
             scrollTrigger:{
                 trigger:".section4",
                 start: "top center",
-                end: "bottom bottom",
+                end:"bottom bottom",
                 scrub: 1,
-                // markers:true,
-            },
-            x:-40,
-            duration: 10
+                markers:true,
+            }
         })
-        console.log(groupRef);        
+        .to(groupRef.current.position,{
+            y:100,
+        })      
     },[props.projects])
 
     const leavePage = () => {
