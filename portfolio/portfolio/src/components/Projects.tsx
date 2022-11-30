@@ -12,24 +12,34 @@ function Projects(props:any){
     const groupRef = useRef() as any;
     const [groupPosition,setGroupPosition] = useState(globalService.helixPosition);
     const [groupRotation,setGroupRotation] = useState(globalService.helixRotation);
+
+    const tilesToTop = () =>{
+        groupRef.current.position.y = 0;
+    }
+
+    const tilesToBottom = () => {
+        groupRef.current.position.y = -100;
+    }
+
     useLayoutEffect(()=>{
-        gsap.to(groupRef.current.position,{
-            scrollTrigger:{
-                trigger:".landingpage",
-                start: "75% center",
-                end: "bottom bottom",
-                scrub: 1,
-                // markers:true,
-            },
-            y:0,
+        
+        ScrollTrigger.create({
+            id:"landingpage",
+            trigger:".landingpage",
+            start: "75% center",
+            end: "bottom 60%",
+            scrub: 1,
+            onEnter: tilesToTop,
+            onLeaveBack: tilesToBottom,
         })
+
         gsap.timeline( {
             scrollTrigger:{
-                trigger:".section3",
+                id:"projects",
+                trigger:".projects",
                 start: "top center",
                 end:"80% center",
                 scrub: 1,
-                // markers:true,
             }
         })
         .to(groupRef.current.rotation,{
@@ -40,16 +50,24 @@ function Projects(props:any){
         },"<")
         gsap.timeline({
             scrollTrigger:{
-                trigger:".section4",
+                id:"contact",
+                trigger:".contact",
                 start: "top center",
                 end:"bottom bottom",
                 scrub: 1,
-                markers:true,
             }
         })
         .to(groupRef.current.position,{
             y:100,
-        })      
+        })
+
+        return() =>{
+            // groupRef.current.kill();
+            ScrollTrigger.getById("landingpage")?.kill();
+            ScrollTrigger.getById("projects")?.kill();
+            ScrollTrigger.getById("contact")?.kill();
+        }
+        
     },[props.projects])
 
     const leavePage = () => {
@@ -58,7 +76,7 @@ function Projects(props:any){
     }
     
     return(
-        <group ref={groupRef} position={[groupPosition.x,groupPosition.y,groupPosition.x]} rotation={[groupRotation.x,groupRotation.y,groupRotation.x]}>
+        <group ref={groupRef} position={[groupPosition.x,groupPosition.y,groupPosition.z]} rotation={[groupRotation.x,groupRotation.y,groupRotation.z]}>
             {props.projects.map(
                 (project:any,index:any)=>{
                     return(

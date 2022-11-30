@@ -63,9 +63,9 @@ function HomePage(){
             <div className="homepage landingpage">
                 <h1>Time to unlock your imagination</h1>
             </div>
-            <div className="homepage section3">
+            <div className="homepage projects">
             </div>
-            <div className="homepage section4">
+            <div className="homepage contact">
             </div>
         </>
         }
