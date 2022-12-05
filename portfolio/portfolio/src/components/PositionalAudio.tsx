@@ -21,18 +21,27 @@ function PositionalAudio(props:any){
             audio.current.setBuffer(buffer);
             audio.current.setRefDistance(0.1);
             audio.current.setLoop(true);
-            if(globalService.audioStatus && globalService.audioChoice){
+            if(props.playChoice && props.playing){
                 audio.current.play();
             }
+
             audio.current.panner.coneInnerAngle = 180;
             audio.current.panner.coneOuterAngle = 230;
             audio.current.panner.coneOuterGain = 0;
             camera.add(listener);
-            return () => {
-                camera.remove(listener);
-            }
+        }
+        return () => {
+            camera.remove(listener);
         }
     },[]);
+
+    useLayoutEffect(()=>{
+        return ()=>{
+            if(audio.current){
+                audio.current.stop();
+            }
+        }
+    },[])
 
     return <positionalAudio ref={audio} args={[listener]} />
 }
