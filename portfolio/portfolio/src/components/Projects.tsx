@@ -28,9 +28,10 @@ function Projects(props:any){
             trigger:".landingpage",
             start: "75% center",
             end: "bottom 60%",
-            scrub: 1,
+            // scrub: 1,
             onEnter: tilesToTop,
             onLeaveBack: tilesToBottom,
+            // markers: true,
         })
 
         gsap.timeline( {
@@ -73,6 +74,8 @@ function Projects(props:any){
     const leavePage = () => {
         globalService.helixPosition = groupRef.current.position;
         globalService.helixRotation = groupRef.current.rotation;
+
+        globalService.audioStatus = false;
     }
     
     return(

@@ -4,12 +4,14 @@ import { Text3D, Float } from '@react-three/drei';
 
 import PositionalAudio from './PositionalAudio';
 import { useNavigate } from 'react-router-dom';
+import { globalService } from '../services/GlobalService';
 
 
 function ProjectTile(props:any){
     const navigate = useNavigate();
     const texture = useLoader(THREE.TextureLoader,`http://localhost:1337${props.project.attributes.thumbnail.data.attributes.url}`);
     const paneClickHandler = (event:any) => {
+        event.stopPropagation();
         props.clickHandler();
         navigate(`/project/${props.project.id}`);
     }
@@ -45,6 +47,8 @@ function ProjectTile(props:any){
             {props.project.attributes.soundtrack.data?
                 <PositionalAudio
                     url={`http://localhost:1337${props.project.attributes.soundtrack.data.attributes.url}`}
+                    playing={globalService.audioStatus}
+                    playChoice={globalService.audioChoice}
                 />
                 : null
             }

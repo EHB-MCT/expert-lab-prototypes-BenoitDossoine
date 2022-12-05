@@ -17,6 +17,7 @@ function DetailPage(props:any){
             .then(response=>{
                 setProject(response);
                 setLoading(false);
+                console.log(response);
             })
         }
     },[parameters.id])
@@ -24,28 +25,36 @@ function DetailPage(props:any){
     const backToHome = ()=>{
         navigate(-1);
     }
-    
+
     return(
         <div className="detailPage">
-            <FaArrowLeft className="backArrow" onClick={()=>backToHome()}/>
-            <div className="detailTextContainer detailDiv">
-                <h1>{project?.attributes?.name}</h1>
-                <p className="detailText">{project?.attributes.description}</p>
+            {loading?
+            <p>Loading</p> :
+            <>
+                <FaArrowLeft className="backArrow" onClick={()=>backToHome()}/>
+                <div className="detailTextContainer detailDiv">
+                    <h1>{project?.attributes?.name}</h1>
+                    <p className="detailText">{project?.attributes.description}</p>
 
-                <div className="detailLinksContainer">
-                    <p className="detailLink">
-                        <FaGlobeAmericas/>
-                        <a href={project?.attributes.link}>View this project</a>
-                    </p>
-                    <p className="detailLink">
-                        <FaGithub/>
-                        <a href={project?.attributes.repository}>Check out the code</a>
-                    </p>
+                    <div className="detailLinksContainer">
+                        {project?.attributes.link&&
+                            <p className="detailLink">
+                            <FaGlobeAmericas/>
+                            <a href={project?.attributes.link}>View this project</a>
+                        </p>
+                        }
+                        {project?.attributes.repository&&
+                            <p className="detailLink">
+                                <FaGithub/>
+                                <a href={project?.attributes.repository}>Check out the code</a>
+                            </p>
+                        }
+                    </div>
                 </div>
-            </div>
-            <div className="detailMediaContainer detailDiv">
-                <img src={`http://localhost:1337${project?.attributes.thumbnail.data.attributes.url}`} alt="" />
-            </div>
+                <div className="detailMediaContainer detailDiv">
+                    <img src={`http://localhost:1337${project?.attributes.thumbnail.data.attributes.url}`} alt="" />
+                </div>
+            </>}
         </div>
 
     )
