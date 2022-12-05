@@ -4,6 +4,7 @@ import {gsap} from 'gsap';
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ProjectTile from './ProjectTile';
 import {globalService} from '../services/GlobalService';
+import * as THREE from 'three';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -14,33 +15,42 @@ function Projects(props:any){
     const [groupRotation,setGroupRotation] = useState(globalService.helixRotation);
 
     const tilesToTop = () =>{
+        console.log('naar boven');
         groupRef.current.position.y = 0;
+        groupRef.current.traverse((child:any) =>{
+            if (child instanceof THREE.Mesh) {
+                child.material.opacity = 1;
+            }
+        })
     }
-
+    
     const tilesToBottom = () => {
+        groupRef.current.traverse((child:any) =>{
+            if (child instanceof THREE.Mesh) {
+                child.material.opacity = 0;
+            }
+        })
+        console.log('naar beneden');
         groupRef.current.position.y = -100;
     }
 
     useLayoutEffect(()=>{
-        
         ScrollTrigger.create({
             id:"landingpage",
             trigger:".landingpage",
-            start: "75% center",
+            start: "60% center",
             end: "bottom 60%",
-            // scrub: 1,
             onEnter: tilesToTop,
             onLeaveBack: tilesToBottom,
-            // markers: true,
         })
-
+        
         gsap.timeline( {
             scrollTrigger:{
                 id:"projects",
                 trigger:".projects",
                 start: "top center",
                 end:"80% center",
-                scrub: 1,
+                scrub: 3,
             }
         })
         .to(groupRef.current.rotation,{

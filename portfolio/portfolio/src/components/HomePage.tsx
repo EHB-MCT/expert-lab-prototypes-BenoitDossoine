@@ -1,4 +1,4 @@
-import {useRef, useLayoutEffect,useEffect,useState} from 'react';
+import {useRef, useEffect,useState} from 'react';
 
 import { Stars } from '@react-three/drei';
 import {Canvas} from '@react-three/fiber';
@@ -10,6 +10,8 @@ import Projects from './Projects';
 import { projectService } from '../services/ProjectService';
 
 import { globalService } from '../services/GlobalService';
+import IntroPage from './IntroPage';
+import LoadingPage from './LoadingPage';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,6 +19,8 @@ function HomePage(){
     const [loading,setLoading] = useState(true);
     const [projects,setProjects] = useState([]);
     const [consent,setConsent] = useState(globalService.consent);
+    const canvasRef = useRef() as any;
+
     useEffect(()=>{
         setLoading(true);
         projectService.fetchProjects()
@@ -24,48 +28,62 @@ function HomePage(){
                 setProjects(response);
                 setLoading(false);
             })
-            
     },[])
 
-    const starRef = useRef() as any;
+    useEffect(()=>{
+        if(canvasRef.current != undefined){
+            console.log(canvasRef.current.style.opacity);
+            gsap.to(canvasRef.current.style,{
+                scrollTrigger:{
+                    trigger:".intropage",
+                    start: "70% center",
+                    end:"100% center",
+                    scrub: 1,
+                    markers:true
+                },
+                opacity: 1,
+                duration: 3,
+            })        
+        }
+    },[consent])
 
+    const consentClick = () => {
+        setConsent(true);
+        globalService.consent = true;
+    }
+    
     return(
     <>
         {!consent?
-            <div className="loadingPage">
-                <p className="loadingPageText">This experience is beter with sound!</p>
-                {loading?
-                    <p className="loadingPageText">Loading....</p>
-                :
-                    <button 
-                        className="loadingPageBtn"
-                        onClick={()=>{
-                            setConsent(true);
-                            globalService.consent = true;
-                            }}>
-                            Enter
-                    </button>
-                }
-            </div>
+            <LoadingPage loading={loading} clickHandler={consentClick}></LoadingPage>
         :
-        <>
-            <Canvas style={{
-                width: "100vw",
-                height: "100vh",
-                zIndex: 50,
-                position: "fixed"
-            }}>
-                <group ref={starRef} visible={true}>
-                    <Stars radius={70} depth={50} count={3000} factor={10} saturation={1} fade speed={1.5}></Stars>
-                </group>
-                <Projects projects={projects}></Projects>
-            </Canvas>
-            <div className="homepage landingpage">
-                <h1>Time to unlock your imagination</h1>
-            </div>
-            <div className="homepage projects">
-            </div>
-            <div className="homepage contact">
+        <>  
+            <div className="homepageWrapper">
+                <Canvas 
+                ref={canvasRef} 
+                style={{
+                    width: "100vw",
+                    height: "100vh",
+                    zIndex: 50,
+                    position: "fixed",
+                    top: 0,
+                    // opacity: 0
+                }}>
+                    <group visible={true}>
+                        <Stars radius={70} depth={50} count={3000} factor={10} saturation={1} fade speed={1.5}></Stars>
+                    </group>
+                    <Projects 
+                        projects={projects}
+                    ></Projects>
+                </Canvas>
+                <IntroPage/>
+                <div className="homepage landingpage">
+                    <h1>Time to unlock your imagination</h1>
+                </div>
+                <div className="homepage projects">
+                </div>
+                <div className="homepage contact">
+                </div>
             </div>
         </>
         }

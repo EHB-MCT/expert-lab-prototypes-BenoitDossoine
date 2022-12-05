@@ -27,22 +27,27 @@ function ProjectTile(props:any){
             <mesh 
                 scale={[2.6,1.5,1]}
                 onClick={paneClickHandler}
-                >
+            >
                 <planeGeometry></planeGeometry>
                 <meshBasicMaterial
                     attach="material"
                     map={texture}
                     side={THREE.DoubleSide}
+                    transparent
+                    opacity={0}
                 />
             </mesh>
                 <Text3D
-                font="./fonts/raleway_light.json"
-                size={0.1}
-                height={ 0.01 }
-                curveSegments={ 12 }
-                position={[-1.3,-0.9,0]}
+                    name={"text"}
+                    font="./fonts/raleway_light.json"
+                    size={0.1}
+                    height={ 0.01 }
+                    curveSegments={ 12 }
+                    position={[-1.3,-0.9,0]}
+                    
                 >
                     {props.project.attributes.name}
+                    <meshBasicMaterial transparent opacity={0}/>
                 </Text3D>
             {props.project.attributes.soundtrack.data?
                 <PositionalAudio
