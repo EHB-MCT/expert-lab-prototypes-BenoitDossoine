@@ -32,7 +32,6 @@ function HomePage(){
 
     useEffect(()=>{
         if(canvasRef.current != undefined){
-            console.log(canvasRef.current.style.opacity);
             gsap.to(canvasRef.current.style,{
                 scrollTrigger:{
                     trigger:".intropage",

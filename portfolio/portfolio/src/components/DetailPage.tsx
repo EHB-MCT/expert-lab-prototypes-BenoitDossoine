@@ -17,7 +17,6 @@ function DetailPage(props:any){
             .then(response=>{
                 setProject(response);
                 setLoading(false);
-                console.log(response);
             })
         }
     },[parameters.id])

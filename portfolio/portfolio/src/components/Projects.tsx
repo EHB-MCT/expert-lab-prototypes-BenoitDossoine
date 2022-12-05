@@ -15,7 +15,6 @@ function Projects(props:any){
     const [groupRotation,setGroupRotation] = useState(globalService.helixRotation);
 
     const tilesToTop = () =>{
-        console.log('naar boven');
         groupRef.current.position.y = 0;
         groupRef.current.traverse((child:any) =>{
             if (child instanceof THREE.Mesh) {
