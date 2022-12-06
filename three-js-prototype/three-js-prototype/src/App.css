@@ -14,9 +14,20 @@
 }
 
 
-.canvasContainer{
+
+.canvasContainer,
+.placeholder,
+.loaderContainer{
   width: 60vw;
   height: 100vh;
+}
+
+.placeholder,
+.loaderContainer{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
 }
 
 .listContainer{
