@@ -8,6 +8,7 @@ app.use(cors());
 
 const storage = multer.diskStorage({
     destination: function(req,file,cb){
+        fs.mkdirSync('public/models',{recursive:true})
         cb(null,'public/models')
     },
     filename: function(req,file,cb){
@@ -27,6 +28,9 @@ app.post('/upload',function(req,res){
 })
 
 app.get('/files',function(req,res){
+    if(!fs.existsSync('./public/models')){
+        fs.mkdirSync('public/models',{recursive:true})
+    }
     const pathName = __dirname+'/public/models';
     let files = fs.readdir(pathName,(error,files)=>{
         if(error){

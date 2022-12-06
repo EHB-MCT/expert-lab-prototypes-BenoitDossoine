@@ -1,46 +1,51 @@
-# Getting Started with Create React App
+# 3D Model Loader
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+## Introduction
 
-## Available Scripts
+This project is a **prototype** made for the course "Expert Labs" in the bachelor of Multimedia & Creative Technologies at the Erasmushogeschool Brussel. It is not hosted.
 
-In the project directory, you can run:
+This prototype is a loader for 3D models. Users can upload their own 3D models, which will appear in a list. When selected, the model is previewed in the application.
+To prototype interactivity, a click event was added to the imported model, causing the clicked mesh to turn red when clicked.
 
-### `npm start`
+## Use
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+1. Clone the 'three-js-prototype' branch of this repository to get the latest version of this prototype.
 
-The page will reload if you make edits.\
-You will also see any lint errors in the console.
+2. Navigate to the 'three-js-prototype/three-js-prototype' folder
+```
+cd ./three-js-prototype/three-js-prototype
+```
+3. Install the npm packages
+```
+npm install
+```
+4. Run the express server to allow local saving and fetching of files
+```
+nodemon server.js
+```
+5. Start the application
+```
+npm run start
+```
 
-### `npm test`
+The application will start in a new window.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+## Features
 
-### `npm run build`
+* Upload your .glb 3D model to add it to the list of models.
+* Contains a list of previously uploaded 3D models.
+* Preview a 3D model by clicking on it in the list.
+* No model selected yet? A placeholder text will be shown.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## Technical stack
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Here's a brief overview of the technology stack this prototype uses:
+* This prototype uses the [React](reactjs.org) framework.
+* This prototype uses [Three.js](https://threejs.org/) and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) for the 3D objects.
+* Helper functions from [drei](https://github.com/pmndrs/drei) are used to show progress updates when a new model is loaded in.
+* An express server is used as a local server, with [Axios](https://axios-http.com/docs/intro) handling the fetching of 3D models.
+* [Multer](https://github.com/expressjs/multer) is a node.js middleware used for uploading new 3D models to a local storage.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Author
 
-### `npm run eject`
-
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
-
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
-
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
-
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
-
-## Learn More
-
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
-
-To learn React, check out the [React documentation](https://reactjs.org/).
+This prototype has been created and is maintained by [Benoît Dossoine](benoit.dossoine.be).

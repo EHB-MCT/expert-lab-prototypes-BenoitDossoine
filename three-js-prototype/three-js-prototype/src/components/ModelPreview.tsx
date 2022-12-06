@@ -1,10 +1,10 @@
 import {Canvas,useLoader} from '@react-three/fiber';
 import { GLTFLoader } from 'three/examples/jsm/loaders/GLTFLoader.js'
-import {OrbitControls} from '@react-three/drei';
-import {useState} from 'react';
+import {Loader, OrbitControls} from '@react-three/drei';
+import {useState, Suspense} from 'react';
 
 function ModelPreview(props:any){
-    const [loaded,setLoaded] = useState(false)
+    const [loaded,setLoaded] = useState(false);
     const model = useLoader(GLTFLoader,`./models/${props.model}`); 
      
     return(
@@ -18,18 +18,21 @@ function ModelPreview(props:any){
                 far: 200,
                 position: [ - 4, 3, 6 ]
             }}>
-                <OrbitControls makeDefault/>
-                <directionalLight castShadow position={ [ 1, 2, 3 ] } intensity={ 1.5 } />
-                <ambientLight intensity={ 0.5 } />
-                <primitive
-                    object={model.scene}
-                    onClick={(event:any)=>{
-                        console.log(event.object);
-                        event.stopPropagation();
-                        event.object.material.color.set('red');
-                    }}
-                />
+                <Suspense fallback={null}>
+                    <OrbitControls makeDefault/>
+                    <directionalLight castShadow position={ [ 1, 2, 3 ] } intensity={ 1.5 } />
+                    <ambientLight intensity={ 0.5 } />
+                    
+                    <primitive
+                        object={model.scene}
+                        onClick={(event:any)=>{
+                            event.stopPropagation();
+                            event.object.material.color.set('red');
+                        }}
+                        />
+                </Suspense>
             </Canvas>
+            <Loader/>
         </div>
     )
 }
