@@ -36,5 +36,5 @@ Here's a brief overview of the technology stack this prototype uses:
 * This prototype uses the [React](reactjs.org) framework.
 * This prototype uses [Three.js](https://threejs.org/) and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) for the 3D objects.
 * Helper functions from [drei](https://github.com/pmndrs/drei) are used to show progress updates when a new model is loaded in.
-* An express server is used as a local server, with axios handling the fetching of 3D models.
-* Multer is a node.js middleware used for uploading new 3D models to a local storage.
+* An express server is used as a local server, with [Axios](https://axios-http.com/docs/intro) handling the fetching of 3D models.
+* [Multer](https://github.com/expressjs/multer) is a node.js middleware used for uploading new 3D models to a local storage.
