@@ -1,35 +1,43 @@
-# first-project
+# The story of Square
 
-This template should help get you started developing with Vue 3 in Vite.
+## Introduction
 
-## Recommended IDE Setup
+This project is a **prototype** made for the course "Expert Labs" in the bachelor of Multimedia & Creative Technologies at the Erasmushogeschool Brussel. It is not hosted.
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur) + [TypeScript Vue Plugin (Volar)](https://marketplace.visualstudio.com/items?itemName=Vue.vscode-typescript-vue-plugin).
+This prototype is an interactive story-telling website, about a square that likes to changes shapes and color.
 
-## Customize configuration
+## Use
 
-See [Vite Configuration Reference](https://vitejs.dev/config/).
+1. Clone this repository to get the latest version of this prototype.
 
-## Project Setup
-
-```sh
+2. Navigate to the '/vue/first-vue-project' folder
+```
+cd ./vue/first-vue-project
+```
+3. Install the npm packages
+```
 npm install
 ```
-
-### Compile and Hot-Reload for Development
-
-```sh
+4. Start the application
+```
 npm run dev
 ```
 
-### Compile and Minify for Production
+## Features
 
-```sh
-npm run build
-```
+* Follow the story of Square, a shape that likes changing things about itself!
+* You can hover over Square on the homepage to make him happy, or make him change colors or shape on the following pages!
 
-### Lint with [ESLint](https://eslint.org/)
+## Technical stack
 
-```sh
-npm run lint
-```
+Here's a brief overview of the technology stack this prototype uses:
+* This prototype uses the [Vue](vuejs.org) framework.
+* To implement the animation, the [Anime.js](https://animejs.com/) animation libray was used.
+
+
+## Sources
+
+* [Programming Vue.js Fullpage Scroll](https://webdeasy.de/en/programming-vue-js-fullpage-scroll/#frameworks), Lorenz. Consulted on September 27th,2022.
+## Author
+
+This prototype has been created and is maintained by [Benoît Dossoine](benoit.dossoine.be).
