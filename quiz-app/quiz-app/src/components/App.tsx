@@ -1,11 +1,12 @@
 import {useEffect,useState} from 'react';
 import {Routes, Route, useNavigate} from "react-router-dom"
-import Homepage from './Homepage'
-import Masterpage from "./Masterpage";
-import { socketsService } from '../services/SocketsService';
-
 import {io} from "socket.io-client";
+import { of, fromEvent } from 'rxjs';
+import { tap } from 'rxjs/operators';
+
 import GameState from '../interfaces/GameState';
+import Homepage from './Homepage';
+import Masterpage from './Masterpage';
 import Quiz from './Quiz';
 import Scorepage from './Scorepage';
 import Player from '../interfaces/Player';
@@ -25,14 +26,21 @@ function App() {
 
   useEffect(()=>{
     client.on("connect",()=>{
-      client.on("player_joined",(player:any)=>{
-        setGameState((gameState)=>{return{...gameState,player:player}});
-        navigate("/quiz");
-      })
+      navigate("/");
 
-      client.on("start_quiz",(questions)=>{
-        console.log(questions);
-        setGameState((gameState)=>{return{...gameState,playing:true,questions:questions}});
+      const connection = fromEvent(client,'player_joined')
+        .pipe(
+          tap(player => {
+            setGameState((gameState)=>{
+              return{...gameState,player:player}
+            });
+            navigate("/quiz");
+          })
+        )
+      connection.subscribe();
+        
+      client.on("start_quiz",(data)=>{
+        setGameState((gameState)=>{return{...gameState,player:data.player,playing:true,questions:data.questions}});
       })
 
       client.on("error",(message:String)=>alert(message));
@@ -43,12 +51,10 @@ function App() {
         setGameState((gameState)=>{return{...gameState,player:player}})
       })
 
-      client.on("nextQuestion", ()=>{
-        const newQuestionNumber = gameState.questionNumber+1;
-        
+      client.on("nextQuestion", (questionNumber)=>{
         const player = gameState.player;
         player.status = "playing";
-        setGameState((gameState)=>{return{...gameState,player:player,questionNumber:newQuestionNumber}})
+        setGameState((gameState)=>{return{...gameState,player:player,questionNumber:questionNumber}})
       })
 
       client.on("master_joined",()=>{
@@ -63,7 +69,7 @@ function App() {
 
     })
 
-  },[])
+  },[gameState])
 
   return (
     <Routes>

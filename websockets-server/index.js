@@ -1,110 +1,160 @@
 const express = require('express');
 const http = require('http');
 
+const {fromEvent,combineLatest,of, from,} = require('rxjs');
+const {tap,switchMap,map, mergeMap,takeUntil,skipWhile,buffer} = require('rxjs/operators');
+const { connection } = require('websocket');
+
 const fetch = (...args) => import('node-fetch').then(({default:fetch})=> fetch(...args));
 const app = express();
 const port = 8000;
-const server = http.createServer(app);
 const io = require("socket.io")(port,{
     cors: "*"
 });
 
-const gameState = {
+const initialGameState = {
     status : false,
     master: {},
     players : [],
-    questions: [
-        {
-            "question": "What is my name?",
-            "rightAnswer": "Benoît",
-            "wrongAnswers": ["Finn","Ilyes"]
-        },{
-            "question": "Which animal is green?",
-            "rightAnswer": "Frog",
-            "wrongAnswers": ["Cow","Dog"]
-        }
-    ],
+    questions: [],
+    questionNumber: 0,
 }
 
+let gameState = {
+    status : false,
+    master: {},
+    players : [],
+    questions: [],
+    questionNumber: 0,
+}
+
+const io$ = of(io);
+const connection$ = io$
+    .pipe(
+        switchMap(io =>
+            fromEvent(io,'connection')
+                .pipe(
+                    map(client => ({io,client}))
+                )      
+        )
+    )
+connection$.subscribe();
+
+const disconnection$ = connection$
+    .pipe(
+        mergeMap(({client}) =>
+            fromEvent(client,'disconnect')
+                .pipe(
+                    map(()=>({client}))
+                )
+        )
+    );
+
+disconnection$.subscribe(({client})=>{
+    if(gameState.players.find(player=>player.id === client.id)){
+        let index = gameState.players.indexOf(gameState.players.find(player=>player.id === client.id));
+        gameState.players.splice(index,1);
+    } else if (gameState.master.id === client.id) {
+        gameState.master = {};
+    }
+});
+
+listenToEvent('join_game')
+    .subscribe(({io,client,data})=>{
+        if(gameState.players.length<2){
+            const newPlayer = {"id":client.id,"score":0,"status":"waiting","name":data}
+            gameState.players.push(newPlayer);
+            io.to(client.id).emit("player_joined",newPlayer)
+        } else {
+            io.to(client.id).emit("error","Too much players in this room!")
+        }
+    })
+
+listenToEvent('join_master')
+    .subscribe(({io,client,data})=>{
+        if(Object.keys(gameState.master).length == 0){
+            gameState.master = {"id":client.id,"status":"creating"};
+            io.to(client.id).emit("master_joined");
+        } else {
+            io.to(client.id).emit("error","There already is a quiz master!");
+        }
+    })
+
+listenToEvent('questions_submitted').subscribe();
+    
+combineLatest([
+    listenToEvent('join_game').pipe(skipWhile(()=>gameState.players.length<2)),
+    listenToEvent('questions_submitted')
+        .pipe(
+            switchMap(({io,client,data})=>from(fetch(`https://opentdb.com/api.php?amount=${data.numberOfQuestions}&category=${data.categories}&difficulty=${data.difficulty}&type=multiple`))
+                .pipe(
+                    switchMap(response => from(response.json())
+                        .pipe(
+                            tap(questions=>gameState.questions = questions.results)
+                        )
+                    )
+                )
+            )
+        )
+    ])
+    .subscribe(()=>
+        {
+            startGame()
+        }
+    )
+
+function listenToEvent(event){
+    return connection$
+        .pipe(
+            mergeMap(({io,client})=>
+                fromEvent(client,event)
+                    .pipe(
+                        takeUntil(
+                            fromEvent(client,'disconnect')
+                        ),
+                        map(data=>({io,client,data}))
+                    )
+            )
+        )
+}
 io.on('connection', (socket)=>{
     /**
      * Player logic
      */
-    socket.on("join_game",(playerName)=>{
-        if(gameState.players.length<2){
-            const newPlayer = {"id":socket.id,"score":0,"status":"waiting","name":playerName}
-            gameState.players.push(newPlayer);
-            io.to(socket.id).emit("player_joined",newPlayer)
-
-            if(gameState.players.length == 2){
-                gameState.status = true;
-                setPlayerStatus("playing");
-                io.emit("start_quiz",gameState.questions);
-            }
-        } else {
-            io.to(playerId).emit("error","Too much players in this room!")
-        }
-    })
-
     socket.on("answer",(data)=>{
         gameState.players.find(player => player.id === data.id).status="answered";
-
         if(data.correct){
             gameState.players.find(player => player.id === data.id).score++;
         }
         
         if(gameState.players.every(player=>player.status==="answered")){
-            setPlayerStatus("playing");
-            io.emit("nextQuestion");
-
+            // end of game logic
+            if(gameState.questionNumber==gameState.questions.length-1){
+                setPlayerStatus("finished");
+                io.emit("end_game",gameState.players);
+                gameState = {...initialGameState};
+                gameState.players = [];
+            }
+            //ongoing game logic
+            else
+            {
+                setPlayerStatus("playing");
+                gameState.questionNumber++;
+                io.emit("nextQuestion",gameState.questionNumber);
+            }
         } else {
             io.to(socket.id).emit("answer");
         }
     })
-
-    /**
-     * Quiz master logic
-     */
-    socket.on("join_master",()=>{
-        if(Object.keys(gameState.master).length == 0){
-            gameState.master = {"id":socket.id,"status":"creating"};
-            io.to(socket.id).emit("master_joined");
-        } else {
-            io.to(socket.id).emit("error","There already is a quiz master!");
-        }
-    })
-
-    socket.on("questions_submitted",async (settings)=>{
-        let questions = await fetch(`https://opentdb.com/api.php?amount=${settings.numberOfQuestions}&category=${settings.categories}&difficulty=${settings.difficulty}&type=multiple`)
-            .then((response)=> response.json())
-            .then(data => data.results);
-        gameState.questions = questions;
-        console.log(gameState.questions);     
-    })
-
-    /**
-     * End of game logic
-     */
-    socket.on("end_player",()=>{
-        gameState.players.find(player => player.id === socket.id).status="finished";
-        if(gameState.players.every(player=>player.status==="finished")){
-            io.emit("end_game",gameState.players);
-            gameState.players = [];
-        }
-    })
-
-
-
-    socket.on('disconnect',()=>{
-        if(gameState.players.find(player=>player.id === socket.id)){
-            let index = gameState.players.indexOf(gameState.players.find(player=>player.id === socket.id));
-            gameState.players.splice(index,1);
-        } else if (gameState.master.id === socket.id) {
-            gameState.master = {};
-        }
-    })
 })
 
+function startGame(){
+    gameState.status = true;
+    setPlayerStatus("playing");
+    for(player of gameState.players){
+        io.to(player.id).emit("start_quiz",{questions:gameState.questions,player:player});
+    }
+}
 function setPlayerStatus(state){
     gameState.players.forEach(player=>player.status = state)
 }
