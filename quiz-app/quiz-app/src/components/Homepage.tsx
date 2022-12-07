@@ -18,7 +18,6 @@ function Homepage(props:any){
     }
     
     useEffect(()=>{
-        // const nameField = document.querySelector('#nameInput') as HTMLInputElement;
         const nameField = document.getElementById('nameInput') as HTMLInputElement;   
         const nameObservable = fromEvent(nameField,'keyup');
         const nameChange = nameObservable.pipe(

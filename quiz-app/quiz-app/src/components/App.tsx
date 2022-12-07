@@ -2,7 +2,7 @@ import {useEffect,useState} from 'react';
 import {Routes, Route, useNavigate} from "react-router-dom"
 import {io} from "socket.io-client";
 import { of, fromEvent } from 'rxjs';
-import { map, switchMap, tap } from 'rxjs/operators';
+import { tap } from 'rxjs/operators';
 
 import GameState from '../interfaces/GameState';
 import Homepage from './Homepage';
@@ -39,11 +39,6 @@ function App() {
         )
       connection.subscribe();
         
-      // client.on("player_joined",(player:any)=>{
-      //   setGameState((gameState)=>{return{...gameState,player:player}});
-      //   navigate("/quiz");
-      // })
-
       client.on("start_quiz",(data)=>{
         setGameState((gameState)=>{return{...gameState,player:data.player,playing:true,questions:data.questions}});
       })
