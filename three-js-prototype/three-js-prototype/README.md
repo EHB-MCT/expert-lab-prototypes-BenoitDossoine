@@ -40,7 +40,7 @@ The application will start in a new window.
 ## Technical stack
 
 Here's a brief overview of the technology stack this prototype uses:
-* This prototype uses the [React](reactjs.org) framework.
+* This prototype uses the [React](https://www.reactjs.org) framework.
 * This prototype uses [Three.js](https://threejs.org/) and [React Three Fiber](https://docs.pmnd.rs/react-three-fiber/getting-started/introduction) for the 3D objects.
 * Helper functions from [drei](https://github.com/pmndrs/drei) are used to show progress updates when a new model is loaded in.
 * An express server is used as a local server, with [Axios](https://axios-http.com/docs/intro) handling the fetching of 3D models.
