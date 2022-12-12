@@ -5,6 +5,7 @@ This project is a **prototype** for the course "Expert Labs" in the bachelor of 
 
 This prototype is a small local quiz app, where 2 players compete against each other in a quiz where the quiz master has chosen the variables, such as number of questions, question category and difficulty.
 
+![ScreenShot](./screenshot.png)
 ## Setup & Installation
 1. Clone this repository to get the latest version of this prototype.
 2. Navigate to the './websockets-server' folder
