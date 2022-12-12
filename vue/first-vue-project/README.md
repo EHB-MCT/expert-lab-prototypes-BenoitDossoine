@@ -31,7 +31,7 @@ npm run dev
 ## Technical stack
 
 Here's a brief overview of the technology stack this prototype uses:
-* This prototype uses the [Vue](vuejs.org) framework.
+* This prototype uses the [Vue](https://vuejs.org) framework.
 * To implement the animation, the [Anime.js](https://animejs.com/) animation libray was used.
 
 
