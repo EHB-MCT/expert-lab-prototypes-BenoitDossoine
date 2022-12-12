@@ -7,6 +7,7 @@ This project is a **prototype** made for the course "Expert Labs" in the bachelo
 This prototype is a loader for 3D models. Users can upload their own 3D models, which will appear in a list. When selected, the model is previewed in the application.
 To prototype interactivity, a click event was added to the imported model, causing the clicked mesh to turn red when clicked.
 
+![ScreenShot](./screenshot.png)
 ## Use
 
 1. Clone the 'three-js-prototype' branch of this repository to get the latest version of this prototype.

@@ -6,6 +6,7 @@ This project is a **prototype** made for the course "Expert Labs" in the bachelo
 
 This prototype is an interactive story-telling website, about a square that likes to changes shapes and color.
 
+![ScreenShot](./screenshot.png)
 ## Use
 
 1. Clone this repository to get the latest version of this prototype.
