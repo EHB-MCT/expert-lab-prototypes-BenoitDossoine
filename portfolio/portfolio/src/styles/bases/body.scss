@@ -1,0 +1,10 @@
+body{
+    margin: 0;
+    background-color: #000001;
+    font-family: $font-family;
+    color: $text-color;
+}
+
+::-webkit-scrollbar {
+    display: none;
+}

@@ -1,0 +1,22 @@
+.loadingPage{
+    width: 100%;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .loadingPageText{
+        font-weight: 200;
+        font-size: 2rem;
+    }
+
+    .loadingPageBtn{
+        background: transparent;
+
+        color: $text-color;
+        font-family: $font-family;
+        text-transform: uppercase;
+    }
+}

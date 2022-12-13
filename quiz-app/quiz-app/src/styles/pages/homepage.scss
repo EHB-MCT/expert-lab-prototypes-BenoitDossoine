@@ -1,0 +1,43 @@
+#homepageContainer{
+    width: 100vw;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+    .homepageBtnContainer{
+        display: flex;
+        gap: 50px;
+    }
+
+    .continueBtn{
+        align-self: end;
+
+        margin-top: 50px;
+        margin-right: 20vw;
+        padding: 0.8em 1em;
+
+        border: 2px solid $text_color;
+        border-radius: 8px;
+        background-color: $background_color;
+        color: $text_color;
+
+        font-size: 1.2em;
+        text-transform: uppercase;
+
+        display: flex;
+        align-items: center;
+    }
+
+    .introText{
+        font-size: 1.4em;
+    }
+
+    #nameInput{
+        border: 1px solid $text_color;
+        padding: 0.5em;
+        border-radius: 5px;
+    }
+}

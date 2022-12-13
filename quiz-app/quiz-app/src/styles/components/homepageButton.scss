@@ -1,0 +1,43 @@
+.homepageBtn{
+    position: relative;
+
+    padding: 0.8em 1em;
+
+    height: 8em;
+    width: 8em;
+
+    font-family: $font_family;
+    font-size: 1.1em;
+    text-transform: uppercase;
+
+    background-color: $background_color;
+    color: #02f4f4;
+
+    border: 2px solid #02f4f4;
+
+    &:after{
+        content: "";
+        border-top: 1rem solid transparent;
+        border-bottom: 1rem solid transparent;
+        border-left: 1rem solid #02f4f4;
+        transform: rotate(-135deg);
+
+        position: absolute;
+        top: -0.4rem;
+        left: 0.075rem;
+    }
+
+    &.active{
+        color: #DF740C;
+        border-color: #DF740C;
+        
+        &:after{
+            border-left-color: #DF740C;
+        }
+        // transform: scale(1.05);
+    }
+
+    &:hover{
+        transform: scale(1.05);
+    }
+}

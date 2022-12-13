@@ -23,14 +23,12 @@
     },
     methods:{
       calculateSectionOffset(){
-      let sections = document.getElementsByClassName('fullpage');
-      let numberOfSections = sections.length;
-
-      for(let i = 0; i<numberOfSections; i++ ){
-        this.offsets.push(sections[i].offsetTop)
-      }
+        let sections = document.getElementsByClassName('fullpage');
+        for(let i = 0; i<sections.length; i++ ){
+          this.offsets.push(sections[i].offsetTop)
+        }
       },
-      scrollToSection(id, force = false) {
+      scrollTo(id, force = false) {
         if (this.inMove && !force) return false;
         this.activeSection = id;
         this.inMove = true;
@@ -44,24 +42,22 @@
       moveDown() {
         this.inMove = true;
         this.activeSection--;
-        if (this.activeSection < 0) this.activeSection = this.offsets.length - 1;
-        this.scrollToSection(this.activeSection, true);
+        this.scrollTo(this.activeSection, true);
       },
       moveUp() {
         this.inMove = true;
         this.activeSection++;
-        if (this.activeSection > this.offsets.length - 1) this.activeSection = 0;
-        this.scrollToSection(this.activeSection, true);
+        this.scrollTo(this.activeSection, true);
       }
     },
 
     mounted(){
       this.calculateSectionOffset();
-      window.addEventListener('mousewheel',(e)=>{
+      window.addEventListener('wheel',(e)=>{
         let delta = e.wheelDelta;
-        if(delta>100 && !this.inMove){
+        if(delta>100 && !this.inMove && this.activeSection>0){
           this.moveDown();
-        } else if(delta<-100 && !this.inMove){
+        } else if(delta<-100 && !this.inMove && this.activeSection<this.offsets.length-1){
           this.moveUp();
         }
         e.preventDefault();
@@ -69,7 +65,7 @@
       },{passive:false})
     },
     destroyed(){
-      window.removeEventListener('mousewheel',this.handleMouseWheel,{passive:false});
+      window.removeEventListener('wheel');
     }
   };
   

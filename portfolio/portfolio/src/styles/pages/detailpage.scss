@@ -1,0 +1,64 @@
+.detailPage{
+    box-sizing: border-box;
+    width: 90%;
+    min-height: 100vh;
+
+    margin: 0 5%;
+    padding-top: 5%;
+
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+
+    position:relative;
+    .backArrow{
+        position: absolute;
+        top: 7%;
+    }
+
+    .detailDiv{
+        width: 45%;
+        box-sizing: border-box;
+    }
+    .detailTextContainer{
+        padding-right: 10%;
+        h1{
+            font-size: 50px;
+            font-weight: 200;
+            margin: 0 0 30px 0;
+        }
+
+        .detailText{
+            font-size: 20px;
+            font-weight: 400;
+        }
+
+        .detailLinksContainer{
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-start;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .detailLink 
+        {
+            display:flex;
+            flex-direction: row;
+            align-items: center;
+            a{
+                margin-left: 10px;
+                text-decoration: none;
+                font-family: $font-family;
+                color: $text-color;
+            }
+        }
+    }
+
+    .detailMediaContainer{
+        align-self: center;
+        img{
+            width: 100%;
+        }
+    }
+}
