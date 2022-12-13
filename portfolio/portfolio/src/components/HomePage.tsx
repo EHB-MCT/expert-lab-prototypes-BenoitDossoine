@@ -1,6 +1,6 @@
 import {useRef, useEffect,useState} from 'react';
 
-import { Stars } from '@react-three/drei';
+import { Stars, Text3D } from '@react-three/drei';
 import {Canvas} from '@react-three/fiber';
 
 import {gsap} from 'gsap';
@@ -12,6 +12,8 @@ import { projectService } from '../services/ProjectService';
 import { globalService } from '../services/GlobalService';
 import IntroPage from './IntroPage';
 import LoadingPage from './LoadingPage';
+import Contact from './Contact';
+import ProjectList from './ProjectList';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -36,13 +38,13 @@ function HomePage(){
                 scrollTrigger:{
                     trigger:".intropage",
                     start: "70% center",
-                    end:"100% center",
+                    // end:"100% center",
                     scrub: 1,
-                    markers:true
                 },
                 opacity: 1,
                 duration: 3,
-            })        
+            })
+            
         }
     },[consent])
 
@@ -59,21 +61,20 @@ function HomePage(){
         <>  
             <div className="homepageWrapper">
                 <Canvas 
-                ref={canvasRef} 
+                ref={canvasRef}
                 style={{
                     width: "100vw",
                     height: "100vh",
-                    zIndex: 50,
                     position: "fixed",
                     top: 0,
-                    // opacity: 0
                 }}>
                     <group visible={true}>
                         <Stars radius={70} depth={50} count={3000} factor={10} saturation={1} fade speed={1.5}></Stars>
                     </group>
-                    <Projects 
+                    <Projects style={{pointerEvents:"auto"}}
                         projects={projects}
                     ></Projects>
+                   
                 </Canvas>
                 <IntroPage/>
                 <div className="homepage landingpage">
@@ -81,9 +82,8 @@ function HomePage(){
                 </div>
                 <div className="homepage projects">
                 </div>
-                <div className="homepage contact">
-                </div>
             </div>
+            <Contact/>
         </>
         }
     </>

@@ -1,5 +1,5 @@
 class ProjectService {
-    private readonly baseUrl = 'http://localhost:1337/api/'
+    private readonly baseUrl = 'https://aerial-bonfire-345216.ew.r.appspot.com/api/'
 
     public async fetchProjects()
     {

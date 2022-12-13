@@ -5,6 +5,8 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 import ProjectTile from './ProjectTile';
 import {globalService} from '../services/GlobalService';
 import * as THREE from 'three';
+import { Text3D } from '@react-three/drei';
+
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -49,21 +51,20 @@ function Projects(props:any){
                 trigger:".projects",
                 start: "top center",
                 end:"80% center",
-                scrub: 3,
+                scrub: 2,
             }
         })
         .to(groupRef.current.rotation,{
-            y:-1*(props.projects.length-1)*Math.PI/3,
+            y:-1*(props.projects).length*Math.PI/3,
         })
         .to(groupRef.current.position,{
-            y:props.projects.length-1,
+            y:(props.projects).length-0.5,
         },"<")
         gsap.timeline({
             scrollTrigger:{
                 id:"contact",
                 trigger:".contact",
-                start: "top center",
-                end:"bottom bottom",
+                start: "top 75%",
                 scrub: 1,
             }
         })
@@ -87,9 +88,13 @@ function Projects(props:any){
         globalService.audioStatus = false;
     }
     
+    
     return(
+        <>
         <group ref={groupRef} position={[groupPosition.x,groupPosition.y,groupPosition.z]} rotation={[groupRotation.x,groupRotation.y,groupRotation.z]}>
-            {props.projects.map(
+            {props.projects
+            .sort((a:any,b:any)=>a.attributes.order-b.attributes.order)
+            .map(
                 (project:any,index:any)=>{
                     return(
                         <ProjectTile key={index} index={index} project={project} clickHandler={leavePage}/>
@@ -97,7 +102,7 @@ function Projects(props:any){
                 }
             )}
         </group>
-                    
+    </>
     )
 }
 

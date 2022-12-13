@@ -9,7 +9,7 @@ import { globalService } from '../services/GlobalService';
 
 function ProjectTile(props:any){
     const navigate = useNavigate();
-    const texture = useLoader(THREE.TextureLoader,`http://localhost:1337${props.project.attributes.thumbnail.data.attributes.url}`);
+    const texture = useLoader(THREE.TextureLoader,`${props.project.attributes.thumbnail.data.attributes.url}`);
     const paneClickHandler = (event:any) => {
         event.stopPropagation();
         props.clickHandler();
@@ -24,7 +24,7 @@ function ProjectTile(props:any){
             <Float
                 floatIntensity={1.5}    
             >
-            <mesh 
+            <mesh
                 scale={[2.6,1.5,1]}
                 onClick={paneClickHandler}
             >
@@ -51,7 +51,7 @@ function ProjectTile(props:any){
                 </Text3D>
             {props.project.attributes.soundtrack.data?
                 <PositionalAudio
-                    url={`http://localhost:1337${props.project.attributes.soundtrack.data.attributes.url}`}
+                    url={`${props.project.attributes.soundtrack.data.attributes.url}`}
                     playing={globalService.audioStatus}
                     playChoice={globalService.audioChoice}
                 />

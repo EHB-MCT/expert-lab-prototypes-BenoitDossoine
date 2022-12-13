@@ -2,6 +2,7 @@ import {useEffect,useState} from "react";
 import {useNavigate, useParams} from "react-router-dom";
 import Project from "../interfaces/ProjectInterface";
 import { projectService } from "../services/ProjectService";
+import {globalService} from '../services/GlobalService';    
 import { FaGithub, FaGlobeAmericas, FaArrowLeft } from "react-icons/fa";
 
 
@@ -22,6 +23,7 @@ function DetailPage(props:any){
     },[parameters.id])
 
     const backToHome = ()=>{
+        globalService.audioStatus = true;
         navigate(-1);
     }
 
@@ -45,13 +47,13 @@ function DetailPage(props:any){
                         {project?.attributes.repository&&
                             <p className="detailLink">
                                 <FaGithub/>
-                                <a href={project?.attributes.repository}>Check out the code</a>
+                                <a href={project?.attributes.repository} target="_blank" rel="noopener noreferrer">Check out the code</a>
                             </p>
                         }
                     </div>
                 </div>
                 <div className="detailMediaContainer detailDiv">
-                    <img src={`http://localhost:1337${project?.attributes.thumbnail.data.attributes.url}`} alt="" />
+                    <img src={`${project?.attributes.thumbnail.data.attributes.url}`} alt="" />
                 </div>
             </>}
         </div>
