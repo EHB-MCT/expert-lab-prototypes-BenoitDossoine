@@ -8,6 +8,7 @@ These prototypes are intended to be technical tests for a later project.
 ## Projects
 
 This repository contains the following projects:
+* Portfolio ([link](/portfolio/portfolio/)).
 * The Quiz App ([link](/quiz-app/quiz-app/))
 * The story of Square ([link](/vue/first-vue-project))
 * 3D Model Loader ([link](/three-js-prototype/three-js-prototype))
